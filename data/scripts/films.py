@@ -22,9 +22,9 @@ for i in range(500):
         'synopsis': fake.text(),
         'releaseDate': fake.date_between(start_date='-30y', end_date='now').strftime('%Y-%m-%d'),
         'duration': fake.random_int(min=60, max=120),
-        'nbEntries': fake.random_int(min=1000, max=1000000),
+        'nbEntries': 0,
+        'recipe': 0,
     }
-
 
     # categories
     random_number_category = fake.random_int(min=1, max=5)
@@ -32,7 +32,8 @@ for i in range(500):
     for i in range(random_number_category):
         random_index = fake.random_int(min=0, max=nb_categories-1)
         category = categories[random_index]
-        film["categories"].append(category["name"])
+        if category["name"] not in film["categories"]:
+            film["categories"].append(category["name"])
 
 
     # actors
@@ -41,17 +42,22 @@ for i in range(500):
     for i in range(random_number_actor):
         random_index = fake.random_int(min=0, max=nb_actors-1)
         actor = actors[random_index]
-        film["actors"].append(actor)
+        if actor not in film["actors"]:
+            film["actors"].append(actor)
 
 
     # producers
     have_multiple_producers = fake.boolean(chance_of_getting_true=10)
-    random_index = fake.random_int(min=0, max=nb_producers-1)
-    film['producers'] = [producers[random_index]]
+    random_producer_index = fake.random_int(min=0, max=nb_producers-1)
+    film['producers'] = [producers[random_producer_index]]
 
     if have_multiple_producers:
-        random_index = fake.random_int(min=0, max=nb_producers-1)
-        film['producers'].append(producers[random_index])
+        random_producer_index_two = fake.random_int(min=0, max=nb_producers-1)
+        if random_producer_index_two != random_producer_index:
+            film['producers'].append(producers[random_producer_index_two])
+        else : 
+            random_index = fake.random_int(min=0, max=nb_producers-1)
+            film['producers'].append(producers[random_index])
 
 
     # feedbacks
