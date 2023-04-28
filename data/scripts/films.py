@@ -1,15 +1,18 @@
 import faker
 import json
+import os
 
 fake = faker.Faker('fr_FR')
 
-categories = json.load(open('../categories.json', 'r'))
+films = []
+
+categories = json.load(open('../categories.json', 'r', encoding='utf8'))
 nb_categories = len(categories)
 
-producers = json.load(open('../producers.json', 'r'))
+producers = json.load(open('../producers.json', 'r', encoding='utf8'))
 nb_producers = len(producers)
 
-actors = json.load(open('../actors.json', 'r'))
+actors = json.load(open('../actors.json', 'r', encoding='utf8'))
 nb_actors = len(actors)
 
 for i in range(500):
@@ -17,7 +20,7 @@ for i in range(500):
     film = {
         'title': fake.sentence(nb_words=3),
         'synopsis': fake.text(),
-        'releaseDate': fake.date_between(start_date='-30y', end_date='now'),
+        'releaseDate': fake.date_between(start_date='-30y', end_date='now').strftime('%Y-%m-%d'),
         'duration': fake.random_int(min=60, max=120),
         'nbEntries': fake.random_int(min=1000, max=1000000),
     }
@@ -29,7 +32,7 @@ for i in range(500):
     for i in range(random_number_category):
         random_index = fake.random_int(min=0, max=nb_categories-1)
         category = categories[random_index]
-        film["categories"].append(category)
+        film["categories"].append(category["name"])
 
 
     # actors
@@ -62,3 +65,10 @@ for i in range(500):
         feedbacks.append(feedback)
 
     film['feedbacks'] = feedbacks
+
+    films.append(film)
+
+# create json file with films
+filename = os.path.join(os.path.dirname(__file__), '..', 'films.json')
+with open(filename, 'w', encoding='utf8') as outfile:
+    json.dump(films, outfile, indent=4, ensure_ascii=False)

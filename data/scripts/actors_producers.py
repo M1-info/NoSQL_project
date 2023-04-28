@@ -12,6 +12,7 @@ for i in range(100):
     }
     persons.append(person)
 
+# save in json file with persons in utf8
 filename = os.path.join(os.path.dirname(__file__), '..', 'actors.json')
-with open(filename, 'w') as f:
-    json.dump(persons, f, indent=4)
+with open(filename, 'w', encoding='utf8') as outfile:
+    json.dump(persons, outfile, indent=4, ensure_ascii=False)
