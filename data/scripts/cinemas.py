@@ -16,6 +16,7 @@ films = json.load(open('../films.json', 'r', encoding='utf8'))
 for i in range(50):
     # general cinema information
     cinema = {
+        '_id': fake.unique.pystr(min_chars=10, max_chars=10),
         'name': fake.company(),
         'city': fake.city(),
         'films': []
@@ -32,7 +33,8 @@ for i in range(50):
         film_recipes = 0
 
         film_date_release = random_film['releaseDate']
-        film_date_end_diffusion = fake.date_between(start_date=str_to_date(film_date_release), end_date='+1y').strftime('%Y-%m-%d')
+        film_date_end = str_to_date(film_date_release) + datetime.timedelta(days=365)
+        film_date_end_diffusion = fake.date_between(start_date=str_to_date(film_date_release), end_date=film_date_end).strftime('%Y-%m-%d')
         film_duration = random_film['duration']
 
         # show information
@@ -69,6 +71,7 @@ for i in range(50):
             shows.append(show)
 
         film = {
+            'film': films[random_index]['_id'],
             'title': films[random_index]['title'],
             'nbEntries': film_entries,
             'recipe' : film_recipes,

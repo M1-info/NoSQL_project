@@ -11,11 +11,16 @@ for i in range(nb_films-1):
     for j in range(len(film_categories)):
         name = film_categories[j]
 
-        current_category = next((f for f in categories if f["name"] == name), None)
+        current_category = next(
+            (f for f in categories if f["name"] == name), None)
 
-        film = {"title": films[i]['title'], "nbEntries": films[i]['nbEntries'], "recipe": films[i]['recipe']}
+        film = {"film": films[i]['_id'],
+                "title": films[i]['title'],
+                "nbEntries": films[i]['nbEntries'],
+                "recipe": films[i]['recipe']
+                }
         current_category['films'].append(film)
-        
+
 # create json file with categories
 filename = os.path.join(os.path.dirname(__file__), '..', 'categories.json')
 with open(filename, 'w', encoding='utf8') as outfile:

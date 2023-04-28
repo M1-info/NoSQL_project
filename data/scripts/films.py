@@ -18,12 +18,14 @@ nb_actors = len(actors)
 for i in range(500):
     # film general infos
     film = {
+        '_id': fake.unique.pystr(min_chars=10, max_chars=10),
         'title': fake.sentence(nb_words=3),
         'synopsis': fake.text(),
         'releaseDate': fake.date_between(start_date='-30y', end_date='now').strftime('%Y-%m-%d'),
         'duration': fake.random_int(min=60, max=120),
         'nbEntries': 0,
         'recipe': 0,
+        'cinemas': [],
     }
 
     # categories

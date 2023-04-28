@@ -1,11 +1,16 @@
 import json
+import faker
 import os
 
 categories_name = ["Horreur", "Action", "Comédie", "Drame", "Thriller", "Science-fiction", "Fantastique", "Aventure", "Animation", "Policier", "Documentaire", "Historique", "Guerre", "Biopic", "Musical", "Western", "Romance", "Famille", "Sport", "Emission", "Jeunesse", "Spectacle", "Autre"]
 categories = []
 
+fake = faker.Faker('fr_FR')
+
 for name in categories_name:
-    category = {"name": name, "films": []}
+    category = {    '_id': fake.unique.pystr(min_chars=10, max_chars=10),
+                    'name': name, 
+                    'films': []}
     categories.append(category)
 
 # create json file with categories

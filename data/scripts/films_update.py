@@ -20,6 +20,8 @@ for i in range(nb_cinemas-1):
         
         current_film['nbEntries'] += film['nbEntries']
         current_film["recipe"] += film['recipe']
+        if cinema['_id'] not in current_film['cinemas']:
+            current_film['cinemas'].append(cinema['_id'])
 
 
 json.dump(films, open('../films.json', 'w', encoding='utf8'), indent=4, ensure_ascii=False)
