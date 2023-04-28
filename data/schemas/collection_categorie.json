@@ -1,42 +1,48 @@
 {
     "title": "categorie",
     "description": "Description d'une categorie de film",
-    "type": "object",
+    "bsonType": "object",
     "properties": {
         "_id": {
             "description": "Identifiant unique pour la categorie",
-            "type": "string"
+            "bsonType": "string"
         },
         "name": {
             "description": "Nom de la categorie",
-            "type": "string",
+            "bsonType": "string",
             "minLength": 2,
-            "maxLength": 20
+            "maxLength": 60
         },
         "films": {
-            "type": "array",
+            "bsonType": "array",
             "items": {
                 "description": "Liste de films ayant cette categorie",
-                "type": "object",
+                "bsonType": "object",
                 "properties": {
                     "film": {
                         "description" : "Reference vers le film",
-                        "$ref": "repository://film"
+                        "bsonType": "string"
                     },
                     "title": {
                         "description" : "Titre du film",
-                        "type": "string",
+                        "bsonType": "string",
                         "minLength": 2,
                         "maxLength": 60
                     },
                     "numberEntries": {
                         "description" : "Nombre d'entrees pour ce film",
-                        "type": "integer"
+                        "bsonType": "int"
+                    },
+                    "recipe": {
+                        "description" : "Recette pour ce film",
+                        "bsonType": "int"
                     }
                 },
                 "required": [
                     "film",
-                    "title"
+                    "title",
+                    "numberEntries",
+                    "recipe"
                 ]
             }
         }

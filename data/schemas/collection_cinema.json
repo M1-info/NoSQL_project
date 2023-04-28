@@ -1,103 +1,98 @@
 {
     "title": "cinema",
     "description": "Description d'un cinema",
-    "type": "object",
+    "bsonType": "object",
     "properties": {
         "_id": {
             "description": "Identifiant unique pour le cinema",
-            "type": "string"
+            "bsonType": "string"
         },
         "name": {
             "description": "Nom du cinema",
-            "type": "string",
+            "bsonType": "string",
             "minLength": 2,
             "maxLength": 30
         },
         "city": {
             "description": "Ville du cinema",
-            "type": "string",
+            "bsonType": "string",
             "minLength": 2,
-            "maxLength": 20
+            "maxLength": 40
         },
         "films": {
-            "type": "array",
+            "bsonType": "array",
             "uniqueItems": true,
             "items": {
                 "description" : "Description d'un film",
-                "type": "object",
+                "bsonType": "object",
                 "properties": {
                     "title": {
                         "description" : "Titre du film",
-                        "type": "string",
+                        "bsonType": "string",
                         "minLength": 2,
                         "maxLength": 60
                     },
                     "film": {
                         "description" : "Reference vers le film",
-                        "$ref": "repository://film"
+                        "bsonType": "string"
                     },
                     "startDiffusion": {
                         "description" : "Date de debut de diffusion",
-                        "type": "string",
-                        "format": "yyyy-mm-dd"
+                        "bsonType": "string"
                     },
                     "endDiffusion": {
                         "description" : "Date de fin de diffusion",
-                        "type": "string",
-                        "format": "yyyy-mm-dd"
+                        "bsonType": "string"
                     },
                     "numberEntries": {
                         "description" : "Nombre d'entrees",
-                        "type": "integer"
+                        "bsonType": "int"
                     },
                     "recipe": {
                         "description" : "Recette",
-                        "type": "integer",
+                        "bsonType": "int",
                         "minimum": 0
                     },
                     "filmShow": {
-                        "type": "array",
+                        "bsonType": "array",
                         "items": {
                             "description" : "Description d'un film",
-                            "type": "object",
+                            "bsonType": "object",
                             "properties": {
                                 "salle": {
                                     "description" : "Salle",
-                                    "type": "integer",
+                                    "bsonType": "int",
                                     "minimum": 0
                                 },
                                 "dateShow": {
                                     "description" : "Date de projection",
-                                    "type": "string",
-                                    "format": "yyyy-mm-dd"
+                                    "bsonType": "string"
                                 },
                                 "startShow": {
                                     "description" : "Heure de début de projection",
-                                    "type": "string",
-                                    "format": "hh:mm"
+                                    "bsonType": "string"
                                 },
                                 "endShow": {
                                     "description" : "Heure de fin de projection",
-                                    "type": "string",
-                                    "format": "hh:mm"
+                                    "bsonType": "string"
                                 },
                                 "durationShow": {
                                     "description" : "Duree de projection en minutes",
-                                    "type": "integer",
+                                    "bsonType": "int",
                                     "minimum": 1
                                 },
                                 "numberEntries": {
                                     "description" : "Nombre d'entrees",
-                                    "type": "integer"
+                                    "bsonType": "int"
                                 },
                                 "recipe": {
                                     "description" : "Recette",
-                                    "type": "integer",
+                                    "bsonType": "int",
                                     "minimum": 0
                                 },
                                 "price": {
                                     "description" : "Prix de la place",
-                                    "type": "integer",
+                                    "bsonType": "int",
                                     "minimum": 0
                                 }
                             }
