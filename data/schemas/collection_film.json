@@ -1,0 +1,123 @@
+{
+    "title": "film",
+    "description": "Description d'un film",
+    "type": "object",
+    "properties": {
+        "_id": {
+            "description": "Identifiant unique pour le film",
+            "type": "string"
+        },
+        "title": {
+            "description": "Titre du film",
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 60
+        },
+        "categories": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+                "description": "Liste des categories du film",
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 20
+            }
+        },
+        "releaseDate": {
+            "description": "Date de sortie du film",
+            "type": "string",
+            "format": "yyyy-mm-dd"
+        },
+        "synopsis": {
+            "description": "Synopsis du film",
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 200
+        },
+        "cinemas": {
+            "type": "array",
+            "items": {
+                "description": "Liste des cinemas ou le film est diffuse",
+                "$ref": "repository://cinema"
+            }
+        },
+        "duration": {
+            "description": "Duree du film en minutes",
+            "type": "integer"
+        },
+        "numberEntries": {
+            "description": "Nombre d'entrees pour le film",
+            "type": "integer"
+        },
+        "actors": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+                "description": "Liste des acteurs du film, avec leur prenom et leur nom",
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 20
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 20
+                    }
+                }
+            }
+        },
+        "producers": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+                "description": "Liste des producteurs du film, avec leur prenom et leur nom",
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 20
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 20
+                    }
+                }
+            }
+        },
+        "usersFeedbacks": {
+            "type": "array",
+            "items": {
+                "description": "Liste des avis des utilisateurs sur le film",
+                "type": "object",
+                "properties": {
+                    "comment": {
+                        "description": "Commentaire de l'utilisateur",
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 200
+                    },
+                    "note": {
+                        "description": "Note de l'utilisateur",
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 5
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "_id",
+        "categories",
+        "duration",
+        "releaseDate",
+        "title"
+    ]
+}

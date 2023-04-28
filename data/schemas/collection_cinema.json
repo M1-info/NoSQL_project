@@ -1,0 +1,118 @@
+{
+    "title": "cinema",
+    "description": "Description d'un cinema",
+    "type": "object",
+    "properties": {
+        "_id": {
+            "description": "Identifiant unique pour le cinema",
+            "type": "string"
+        },
+        "name": {
+            "description": "Nom du cinema",
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 30
+        },
+        "city": {
+            "description": "Ville du cinema",
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 20
+        },
+        "films": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+                "description" : "Description d'un film",
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "description" : "Titre du film",
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 60
+                    },
+                    "film": {
+                        "description" : "Reference vers le film",
+                        "$ref": "repository://film"
+                    },
+                    "startDiffusion": {
+                        "description" : "Date de debut de diffusion",
+                        "type": "string",
+                        "format": "yyyy-mm-dd"
+                    },
+                    "endDiffusion": {
+                        "description" : "Date de fin de diffusion",
+                        "type": "string",
+                        "format": "yyyy-mm-dd"
+                    },
+                    "numberEntries": {
+                        "description" : "Nombre d'entrees",
+                        "type": "integer"
+                    },
+                    "recipe": {
+                        "description" : "Recette",
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "filmShow": {
+                        "type": "array",
+                        "items": {
+                            "description" : "Description d'un film",
+                            "type": "object",
+                            "properties": {
+                                "salle": {
+                                    "description" : "Salle",
+                                    "type": "integer",
+                                    "minimum": 0
+                                },
+                                "dateShow": {
+                                    "description" : "Date de projection",
+                                    "type": "string",
+                                    "format": "yyyy-mm-dd"
+                                },
+                                "startShow": {
+                                    "description" : "Heure de début de projection",
+                                    "type": "string",
+                                    "format": "hh:mm"
+                                },
+                                "endShow": {
+                                    "description" : "Heure de fin de projection",
+                                    "type": "string",
+                                    "format": "hh:mm"
+                                },
+                                "durationShow": {
+                                    "description" : "Duree de projection en minutes",
+                                    "type": "integer",
+                                    "minimum": 1
+                                },
+                                "numberEntries": {
+                                    "description" : "Nombre d'entrees",
+                                    "type": "integer"
+                                },
+                                "recipe": {
+                                    "description" : "Recette",
+                                    "type": "integer",
+                                    "minimum": 0
+                                },
+                                "price": {
+                                    "description" : "Prix de la place",
+                                    "type": "integer",
+                                    "minimum": 0
+                                }
+                            }
+                        }
+                    }
+                },
+                "required": [
+                    "title",
+                    "film"
+                ]
+            }
+        }
+    },
+    "required": [
+        "_id",
+        "name"
+    ]
+}

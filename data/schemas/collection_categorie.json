@@ -1,0 +1,48 @@
+{
+    "title": "categorie",
+    "description": "Description d'une categorie de film",
+    "type": "object",
+    "properties": {
+        "_id": {
+            "description": "Identifiant unique pour la categorie",
+            "type": "string"
+        },
+        "name": {
+            "description": "Nom de la categorie",
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 20
+        },
+        "films": {
+            "type": "array",
+            "items": {
+                "description": "Liste de films ayant cette categorie",
+                "type": "object",
+                "properties": {
+                    "film": {
+                        "description" : "Reference vers le film",
+                        "$ref": "repository://film"
+                    },
+                    "title": {
+                        "description" : "Titre du film",
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 60
+                    },
+                    "numberEntries": {
+                        "description" : "Nombre d'entrees pour ce film",
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "film",
+                    "title"
+                ]
+            }
+        }
+    },
+    "required": [
+        "_id",
+        "name"
+    ]
+}
