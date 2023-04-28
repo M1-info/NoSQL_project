@@ -5,7 +5,7 @@ categories_name = ["Horreur", "Action", "Comédie", "Drame", "Thriller", "Scienc
 categories = []
 
 for name in categories_name:
-    category = {"name": name}
+    category = {"name": name, "films": []}
     categories.append(category)
 
 # create json file with categories
