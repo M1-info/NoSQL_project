@@ -1,0 +1,25 @@
+use("ct620574")
+
+let titles = [
+    "Harry Potter et la chambre des secrets",
+    "Harry Potter et le prisonnier d'Azkaban",
+    "Harry Potter et la coupe de feu",
+    "Harry Potter et l'ordre du phénix",
+    "Harry Potter et le prince de sang-mêlé",
+    "Harry Potter et les reliques de la mort - Partie 1",
+    "Harry Potter et les reliques de la mort - Partie 2"
+]
+
+let filters = {
+    title: {$in: titles}
+};
+
+try {
+    // remove films from cinemas first
+    db.cinemas.updateMany({}, {$pull: {films: {title: {$in: titles}}}})
+
+    // then remove films
+    db.films.deleteMany(filters)
+} catch(error) {
+    print("Error: " + error.message)
+}

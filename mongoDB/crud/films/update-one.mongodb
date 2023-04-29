@@ -1,0 +1,50 @@
+use("ct620574")
+
+
+// film general update
+let filter = {
+    title: "Harry Potter et la chambre des secrets"
+}
+
+let update = {
+    $set: {
+        synopsis: "Synopsis du film Harry Potter et la chambre des secrets"
+    }
+}
+
+// check if we need to update global informations in other collections
+let needGlobalUpdate = ["title", "recipe", "numberEntries"]
+let toUpdateGlobally = []
+
+// if some of the fields that are updated are global, we need to update them in other collections
+for (let key in Object.keys(update.$set)) {
+    // generate array with all the keys that are updated
+    if (!needGlobalUpdate.includes(key)) continue
+    toUpdateGlobally.push(key)
+}
+
+try {
+    // if the generated array is not empty, we need to update the global informations
+    if (toUpdateGlobally.length > 0) {
+        // create empty object to update
+        let updateGlobals = {$set: {}}
+
+        // add all the keys that are updated to the object
+        for (let key of toUpdateGlobally) {
+            updateGlobals.$set[key] = update.$set[key]
+        }
+
+        // get the id of the film that is updated
+        let id = db.films.findOne(filter)._id
+
+        // update the global informations in other collections
+        db.cinemas.updateMany({"films.film": id}, updateGlobals)
+        db.categories.updateMany({"films.film": id}, updateGlobals)
+    }
+
+    // update the film in any case
+    db.films.updateOne(filter, update)
+}
+catch(error) {
+    print("Error: " + error.message)
+}

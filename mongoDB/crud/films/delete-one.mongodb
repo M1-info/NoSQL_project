@@ -1,0 +1,12 @@
+use("ct620574")
+
+let filters = {
+    title: "Harry Potter à l'école des sorciers"
+}
+
+try {
+    db.cinemas.updateMany({}, {$pull: {films: {title: filters.title}}})
+    db.films.deleteOne(filters)
+} catch(error) {
+    print("Error: " + error.message)
+}
