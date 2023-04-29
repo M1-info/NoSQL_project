@@ -48,7 +48,6 @@
         }
     },
     "required": [
-        "_id",
         "name"
     ]
 }

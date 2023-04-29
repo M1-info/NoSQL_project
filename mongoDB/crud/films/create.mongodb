@@ -1,0 +1,85 @@
+use("ct620574")
+
+// film general informations
+let title = "Harry Potter à l'école des sorciers"
+let synopsis = "Harry Potter, un jeune orphelin, est élevé par son oncle Vernon et sa tante Pétunia qui le détestent."
+let releaseDate = "2001-11-16"
+let duration = 152
+let numberEntries = 0
+let recipe = 0
+let cinemas = []
+
+// get the film category id
+let categories_query = db.categories.find({"name": "Fantastique"}, {"name": 1}).toArray()
+let categories = categories_query.map(category => category.name)
+
+
+// film actors and producers
+let actors = [
+    {
+        firstName: "Daniel",
+        lastName: "Radcliffe",
+    },
+    {
+        firstName: "Rupert",
+        lastName: "Grint",
+    },
+    {
+        firstName: "Emma",
+        lastName: "Watson",
+    },
+]
+
+let producers = [
+    {
+        firstName: "David",
+        lastName: "Heyman",
+    },
+    {
+        firstName: "Chris",
+        lastName: "Columbus",
+    },
+]
+
+
+// film feedbacks
+let feedbacks = [
+    {
+        comment: "I love this movie",
+        rating: 5,
+    },
+    {
+        comment: "Amazing movie",
+        rating: 5,
+    },
+    {
+        comment: "A very beautiful movie",
+        rating: 4,
+    },
+    {
+        comment: "A little bit wtf",
+        rating: 3,
+    },
+]
+
+// create the film object
+let film = { 
+    _id: ObjectId().toString(),
+    title, 
+    synopsis, 
+    releaseDate, 
+    duration, 
+    numberEntries,
+    recipe,
+    cinemas, 
+    categories, 
+    actors, 
+    producers, 
+    feedbacks 
+}
+
+try {
+    db.films.insertOne(film)
+} catch (error) {
+    print(error.message)
+}

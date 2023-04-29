@@ -91,7 +91,7 @@
                 }
             }
         },
-        "usersFeedbacks": {
+        "feedbacks": {
             "bsonType": "array",
             "items": {
                 "description": "Liste des avis des utilisateurs sur le film",
@@ -114,7 +114,6 @@
         }
     },
     "required": [
-        "_id",
         "categories",
         "duration",
         "releaseDate",

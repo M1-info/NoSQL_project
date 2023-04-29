@@ -2,7 +2,6 @@ import faker
 import json
 import os
 import datetime
-from pprint import pprint
 
 def str_to_date(date):
     return datetime.datetime.strptime(date, "%Y-%m-%d")
@@ -73,7 +72,7 @@ for i in range(50):
         film = {
             'film': films[random_index]['_id'],
             'title': films[random_index]['title'],
-            'nbEntries': film_entries,
+            'numberEntries': film_entries,
             'recipe' : film_recipes,
             'filmShow': shows,
             'startDiffusion': film_date_release,

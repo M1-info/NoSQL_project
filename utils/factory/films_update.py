@@ -18,7 +18,7 @@ for i in range(nb_cinemas-1):
             print(film_title)
             continue
         
-        current_film['nbEntries'] += film['nbEntries']
+        current_film['numberEntries'] += film['numberEntries']
         current_film["recipe"] += film['recipe']
         if cinema['_id'] not in current_film['cinemas']:
             current_film['cinemas'].append(cinema['_id'])
