@@ -1,0 +1,20 @@
+use("ct620574")
+
+
+// film general update
+let filter = {
+    "actors.lastName": "Radcliffe2"
+}
+
+let update = {
+    $set: {
+        "actors.$.lastName": "Radcliffe"
+    }
+}
+
+try {
+    db.films.updateMany(filter, update)
+}
+catch(error) {
+    print("Error: " + error.message)
+}
