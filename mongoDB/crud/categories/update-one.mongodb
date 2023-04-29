@@ -1,0 +1,25 @@
+use("ct620574")
+
+// update the category with this name
+let filter = {
+    name : "Horreur"
+}
+
+let update = {
+    $set : {
+        name : "horror"
+    }
+}
+
+try {
+    // update the category from the films before
+    let updateCategories = {
+        $set : {
+            "categories.$" : update.$set.name
+        }
+    }
+    db.films.updateMany({categories: filter.name}, updateCategories)
+    db.categories.updateOne(filter, update)
+} catch (error) {
+    print(error.message)
+}

@@ -1,0 +1,24 @@
+use("ct620574")
+
+// names of the categories
+let names = ["Mystery", "Western", "Crime thriller", "Techno thriller", "Zombie horror"]
+let nb_categories = names.length
+let categories = []
+
+for (let i = 0; i < nb_categories; i++) {
+    // create the category object
+    let category = { 
+        _id: ObjectId().toString(),
+        name : names[i]
+    }
+
+    categories.push(category)
+}
+
+
+
+try {
+    db.categories.insertMany(categories)
+} catch (error) {
+    print(error.message)
+}

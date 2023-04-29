@@ -1,0 +1,15 @@
+use("ct620574")
+
+// delete categories with this names
+let names = ["Mystery", "Western", "Crime thriller", "Techno thriller", "Zombie horror"]
+let filters = {
+    name : {$in : names}
+}
+
+try {
+    // delete the categories from the films before
+    db.films.updateMany({}, {$pull: { categories: { $in: names }}})
+    db.categories.deleteMany(filters)
+} catch (error) {
+    print(error.message)
+}
