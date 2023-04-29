@@ -1,0 +1,23 @@
+use("ct620574")
+
+let filter = {
+    name : "Le Petit Rex"
+}
+
+try {
+    // update films, remove cinema id and decremente numberEntries and recipe
+    let cinema = db.cinemas.find(filter, {"films" : 1}).toArray()[0]
+    let nb_films = cinema.films.length
+    for (let i = 0; i < nb_films; i++) {
+        db.films.updateOne(
+            { _id: cinema.films[i].film },
+            {   $pull: { cinemas: cinema._id },
+                $inc: { numberEntries: -cinema.films[i].numberEntries, 
+                        recipe: -cinema.films[i].recipe }
+            }
+        )
+    }
+    db.cinemas.deleteOne(filter)
+} catch(error) {
+    print("Error: " + error.message)
+}

@@ -1,0 +1,65 @@
+use("ct620574")
+
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}
+
+// cinema general informations
+let name = "Le Petit Rex"
+let city = "Dijon"
+let films = []
+
+// get some films id
+let films_query = db.films.find({}, {"title": 1 , "releaseDate": 1}).limit(2).toArray()
+let nb_films = films_query.length
+
+for (let i = 0; i < nb_films; i++) {
+    let endDiffusion_date = addDays(films_query[i].releaseDate, 365)
+    let endDiffusion = endDiffusion_date.toISOString().split('T')[0]
+    let film = {
+        title: films_query[i].title,
+        film: films_query[i]._id,
+        startDiffusion : films_query[i].releaseDate,
+        endDiffusion,
+        numberEntries : 100,
+        recipe : 1000,
+        filmShow : [
+            {
+                salle: 1,
+                dateShow: films_query[i].releaseDate,
+                startShow: "20:00",
+                endShow: "22:00",
+                durationShow: 112,
+                numberEntries: 100,
+                recipe: 1000,
+                price: 10
+                
+            }
+        ]  
+    }
+    films.push(film)
+}
+
+let cinema = {
+    _id: ObjectId().toString(),
+    name,
+    city,
+    films
+}
+
+try {
+    db.cinemas.insertOne(cinema)
+    // update films numberEntries and recipe
+    for (let i = 0; i < nb_films; i++) {
+        db.films.updateOne(
+            { _id: films_query[i]._id },
+            {   $addToSet: { cinemas: cinema._id }, 
+                $inc: { numberEntries: films[i].numberEntries, recipe: films[i].recipe }
+            }
+        )
+    }
+} catch (error) {
+    print(error.message)
+}

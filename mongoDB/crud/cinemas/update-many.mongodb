@@ -1,0 +1,18 @@
+use("ct620574")
+
+let filter = {
+    city : "Paris"
+}
+
+let update = {
+    $set: {
+        city : "Paris centre"
+    }
+}
+
+try {
+    db.cinemas.updateMany(filter, update)
+}
+catch(error) {
+    print("Error: " + error.message)
+}

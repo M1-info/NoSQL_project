@@ -1,0 +1,18 @@
+use("ct620574")
+
+let filter = {
+    name : "Le Petit Rex"
+}
+
+let update = {
+    $set: {
+        city : "Paris"
+    }
+}
+
+try {
+    db.cinemas.updateOne(filter, update)
+}
+catch(error) {
+    print("Error: " + error.message)
+}

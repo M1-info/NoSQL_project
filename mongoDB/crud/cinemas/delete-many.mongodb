@@ -1,0 +1,26 @@
+use("ct620574")
+
+let filter = {
+    city : "Dijon"
+}
+
+try {
+    // update films, remove cinema id and decremente numberEntries and recipe
+    let cinemas = db.cinemas.find(filter, {"films" : 1}).toArray()
+    let nb_cinemas = cinemas.length
+    for (let i = 0; i < nb_cinemas; i++) {
+        let nb_films = cinemas[i].films.length
+        for (let i = 0; i < nb_films; i++) {
+            db.films.updateOne(
+                { _id: cinemas[i].films[i].film },
+                {   $pull: { cinemas: cinemas[i]._id },
+                    $inc: { numberEntries: -cinemas[i].films[i].numberEntries, 
+                            recipe: -cinemas[i].films[i].recipe }
+                }
+            )
+        }
+    }
+    db.cinemas.deleteMany(filter)
+} catch(error) {
+    print("Error: " + error.message)
+}
