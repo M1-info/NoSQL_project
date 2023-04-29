@@ -1,0 +1,13 @@
+use("ct620574")
+
+filter = {
+    name : "Le Petit Rex"
+}
+
+cinema_id = db.cinemas.find(filter, {"_id" : 1}).toArray()[0]._id
+
+print("Liste des films diffusés dans ce cinéma: ")
+films = db.films.find({"cinemas" : cinema_id}, {"_id" : 0, "title" : 1}).toArray()
+
+films.forEach(film => { print(film.title) })
+

@@ -1,0 +1,12 @@
+use("ct620574")
+
+filter = {
+    title : "Harry Potter à l'école des sorciers"
+}
+
+feedback = {
+    comment: "Pourquoi pas",
+    rating: 4
+}
+
+db.films.updateOne(filter, {$push: {feedbacks: feedback}})

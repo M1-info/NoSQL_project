@@ -1,0 +1,11 @@
+use("ct620574")
+
+filter = {
+    firstName: "Daniel",
+    lastName : "Radcliffe"
+}
+
+films = db.films.find({"actors" : filter}, {"_id" : 0, "title" : 1}).toArray()
+
+print("Liste des films dans lesquels joue cet acteur: ")
+films.forEach(film => { print(film.title) })

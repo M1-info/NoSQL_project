@@ -1,0 +1,12 @@
+use("ct620574")
+
+filter = {
+    title : "Harry Potter à l'école des sorciers"
+}
+
+feedbacks = db.films.find(filter, {"_id" : 0, "feedbacks" : 1}).toArray()[0].feedbacks
+
+print("Liste des commentaires de ce film: ")
+feedbacks.forEach(feedback => {
+    print(feedback.comment + " - Note: " + feedback.rating + "/5")
+})
