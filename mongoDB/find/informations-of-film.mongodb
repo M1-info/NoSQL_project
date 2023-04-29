@@ -1,0 +1,13 @@
+use("ct620574")
+
+filter = {
+    title: "Harry Potter à l'école des sorciers"
+}
+
+film_infos = db.films.find(filter).toArray()[0]
+
+print("Informations du film: " + film_infos.title)
+print("Synopsis: " + film_infos.synopsis)
+print("Date de sortie: " + film_infos.releaseDate)
+print("Durée: " + film_infos.duration + " minutes")
+print("Classé dans les catégories: " + film_infos.categories.join(", "))

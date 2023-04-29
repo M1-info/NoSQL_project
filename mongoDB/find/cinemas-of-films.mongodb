@@ -1,0 +1,15 @@
+use("ct620574")
+
+filter = {
+    title : "Déchirer emporter."
+}
+
+cinemas = db.films.find(filter, {"_id" : 0, "cinemas" : 1}).toArray()[0].cinemas
+
+print("Liste des cinémas où ce film est diffusé: ")
+cinemas.forEach(cinema => {
+    cinema_infos = db.cinemas.find({"_id" : cinema}, {"_id" : 0, "name" : 1, "city" : 1}).toArray()[0]
+    if(cinema_infos != undefined){
+        print("Nom: " + cinema_infos.name + " - Ville: " + cinema_infos.city)
+    }
+})

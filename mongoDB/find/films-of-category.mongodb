@@ -1,0 +1,12 @@
+use("ct620574")
+
+filter = {
+    categories : "Fantastique"
+}
+
+films = db.films.find(filter).toArray()
+let nb_films = films.length
+
+print("Nombre de films de la catégorie Fantastique:" + nb_films)
+print("Liste des films de la catégorie Fantastique:")
+films.forEach(film => print(film.title))
