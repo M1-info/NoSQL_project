@@ -5,7 +5,13 @@ let filters = {
 }
 
 try {
+    // remove film from cinemas first
     db.cinemas.updateMany({}, {$pull: {films: {title: filters.title}}})
+
+    // remove film from categories
+    db.categories.updateMany({}, {$pull: {films: {title: filters.title}}})
+
+    // then remove film
     db.films.deleteOne(filters)
 } catch(error) {
     print("Error: " + error.message)

@@ -1,5 +1,11 @@
 use("ct620574")
 
+// function to convert a string to a date
+function str_to_date(str) {
+    let date = str.split("-")
+    return new Date(date[0], date[1] - 1, date[2])
+}
+
 // film general informations
 let titles = [
     "Harry Potter et la chambre des secrets", 
@@ -22,13 +28,23 @@ let synopsises = [
 ]
 
 let releaseDates = [
-    "2002-11-04",
-    "2004-11-29",
-    "2005-11-30",
-    "2007-07-11",
-    "2009-07-15",
-    "2010-11-24",
-    "2011-07-13"
+    str_to_date("2002-11-04"),
+    str_to_date("2004-11-29"),
+    str_to_date("2005-11-30"),
+    str_to_date("2007-07-11"),
+    str_to_date("2009-07-15"),
+    str_to_date("2010-11-24"),
+    str_to_date("2011-07-13")
+]
+
+let categories = [
+    ["Fantastique"],
+    ["Fantastique"],
+    ["Fantastique"],
+    ["Fantastique"],
+    ["Fantastique"],
+    ["Fantastique"],
+    ["Fantastique"]
 ]
 
 let durations = [
@@ -44,10 +60,6 @@ let durations = [
 let numberEntries = 0
 let recipe = 0
 let cinemas = []
-
-// get the film category id
-let categories_query = db.categories.find({"name": "Fantastique"}, {"name": 1}).toArray()
-let categories = categories_query.map(category => category.name)
 
 
 // film actors and producers
@@ -99,11 +111,16 @@ let feedbacks = [
 ]
 
 let films = []
+let films_id = []
 
 // create the films objects
-for (let i = 0; i < titles.length; i++) {
+let nb_films = titles.length
+for (let i = 0; i < nb_films; i++) {
+    let id = ObjectId().toString()
+    films_id.push(id)
+
     let film = {
-        _id: ObjectId().toString(),
+        _id: id,
         title: titles[i],
         synopsis: synopsises[i],
         releaseDate: releaseDates[i],
@@ -112,7 +129,7 @@ for (let i = 0; i < titles.length; i++) {
         recipe,
         recipe,
         cinemas,
-        categories,
+        categories : categories[i],
         actors,
         producers,
         feedbacks,
@@ -122,6 +139,23 @@ for (let i = 0; i < titles.length; i++) {
 
 try {
     db.films.insertMany(films)
+    // add all films to films list of every category
+    let nb_films = titles.length
+    for (let i = 0; i < nb_films; i++){
+            
+        let film_category = {
+            film : films_id[i],
+            title : titles[i],
+            numberEntries,
+            recipe
+        }
+
+        categories[i].forEach(category => {
+            let filter = { name: category }
+            let update = { $push: { films: film_category } }
+            db.categories.updateOne(filter, update)
+        })
+    }
 } catch (error) {
     print(error.message)
 }

@@ -10,12 +10,12 @@ try {
     let nb_cinemas = cinemas.length
     for (let i = 0; i < nb_cinemas; i++) {
         let nb_films = cinemas[i].films.length
-        for (let i = 0; i < nb_films; i++) {
+        for (let j = 0; j < nb_films; j++) {
             db.films.updateOne(
-                { _id: cinemas[i].films[i].film },
+                { _id: cinemas[i].films[j].film },
                 {   $pull: { cinemas: cinemas[i]._id },
-                    $inc: { numberEntries: -cinemas[i].films[i].numberEntries, 
-                            recipe: -cinemas[i].films[i].recipe }
+                    $inc: { numberEntries: -cinemas[i].films[j].numberEntries, 
+                            recipe: -cinemas[i].films[j].recipe }
                 }
             )
         }

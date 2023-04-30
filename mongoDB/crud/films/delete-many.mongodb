@@ -18,8 +18,12 @@ try {
     // remove films from cinemas first
     db.cinemas.updateMany({}, {$pull: {films: {title: {$in: titles}}}})
 
+    // remove films from categories
+    db.categories.updateMany({}, {$pull: {films: {title: {$in: titles}}}})
+
     // then remove films
     db.films.deleteMany(filters)
+
 } catch(error) {
     print("Error: " + error.message)
 }

@@ -3,12 +3,12 @@ use("ct620574")
 
 // film general update
 let filter = {
-    "actors.lastName": "Radcliffe2"
+    "actors.lastName": "Radcliffe"
 }
 
 let update = {
     $set: {
-        "actors.$.lastName": "Radcliffe"
+        "actors.$.lastName": "Radcliffe2"
     }
 }
 

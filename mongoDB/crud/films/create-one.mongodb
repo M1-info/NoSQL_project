@@ -1,17 +1,21 @@
 use("ct620574")
 
+// function to convert a string to a date
+function str_to_date(str) {
+    let date = str.split("-")
+    return new Date(date[0], date[1] - 1, date[2])
+}
+
 // film general informations
+let film_id = ObjectId().toString()
 let title = "Harry Potter à l'école des sorciers"
 let synopsis = "Harry Potter, un jeune orphelin, est élevé par son oncle Vernon et sa tante Pétunia qui le détestent."
-let releaseDate = "2001-11-16"
+let releaseDate = str_to_date("2001-11-16")
+let categories = ["Fantastique"]
 let duration = 152
 let numberEntries = 0
 let recipe = 0
 let cinemas = []
-
-// get the film category id
-let categories_query = db.categories.find({"name": "Fantastique"}, {"name": 1}).toArray()
-let categories = categories_query.map(category => category.name)
 
 
 // film actors and producers
@@ -64,7 +68,7 @@ let feedbacks = [
 
 // create the film object
 let film = { 
-    _id: ObjectId().toString(),
+    _id: film_id,
     title, 
     synopsis, 
     releaseDate, 
@@ -78,8 +82,22 @@ let film = {
     feedbacks 
 }
 
+let film_category = {
+    film : film_id,
+    title,
+    numberEntries,
+    recipe
+}
+
 try {
     db.films.insertOne(film)
+    // add the film to films list of every category
+    categories.forEach(category => {
+        let filter = { name: category }
+        let update = { $push: { films: film_category } }
+        db.categories.updateOne(filter, update)
+    })
+
 } catch (error) {
     print(error.message)
 }

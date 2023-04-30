@@ -1,7 +1,7 @@
 use("ct620574")
 
 function addDays(date, days) {
-    var result = new Date(date);
+    var result = date
     result.setDate(result.getDate() + days);
     return result;
 }
@@ -16,26 +16,32 @@ let films_query = db.films.find({}, {"title": 1 , "releaseDate": 1}).limit(2).to
 let nb_films = films_query.length
 
 for (let i = 0; i < nb_films; i++) {
-    let endDiffusion_date = addDays(films_query[i].releaseDate, 365)
-    let endDiffusion = endDiffusion_date.toISOString().split('T')[0]
+    //let endDiffusion_date = addDays(films_query[i].releaseDate, 365)
+    //let endDiffusion = endDiffusion_date.toISOString().split('T')[0]
+    let releaseDate = films_query[i].releaseDate
+    let endDiffusion = addDays(releaseDate, 365)
+    start_show_date = releaseDate
+    start_show_date.setHours(20)
+    end_show_date = releaseDate
+    end_show_date.setHours(22)
+
     let film = {
         title: films_query[i].title,
         film: films_query[i]._id,
-        startDiffusion : films_query[i].releaseDate,
+        startDiffusion : releaseDate,
         endDiffusion,
         numberEntries : 100,
         recipe : 1000,
         filmShow : [
             {
                 salle: 1,
-                dateShow: films_query[i].releaseDate,
-                startShow: "20:00",
-                endShow: "22:00",
+                dateShow: releaseDate,
+                startShow: start_show_date,   // 20h00
+                endShow: end_show_date,       // 22h00
                 durationShow: 112,
                 numberEntries: 100,
                 recipe: 1000,
-                price: 10
-                
+                price: 10 
             }
         ]  
     }
