@@ -1,0 +1,27 @@
+use("ct620574")
+
+let cinema_filter = { 
+    name : "Aubry Samson et Fils",
+}
+
+let film_filter = { "films.filmShow.dateShow" : {
+    $gte: new Date("2010-01-01"),
+    $lte: new Date("2020-12-31")
+} }
+
+let query = [
+    { $match : cinema_filter },
+    { $unwind: "$films" },
+    { $unwind: "$films.filmShow" },
+    { $match :  film_filter},
+    { $group: { _id: "$films.title", recipe: { $sum: "$films.filmShow.recipe" } } },
+    { $group : { _id: null, recipe: { $sum: "$recipe" } } },
+]
+
+let recipe = db.cinemas.aggregate(query).next()
+
+if(recipe == null){
+    print("Pas de recette pendant cette période pour ce cinéma dans la base de données.")
+} else {
+    print(`► "Le cinéma ${cinema_filter.name}" a réalisé un bénéfice de ${recipe.recipe}€ pendant la période [${film_filter["films.filmShow.dateShow"].$gte} - ${film_filter["films.filmShow.dateShow"].$lte} ]` )
+}

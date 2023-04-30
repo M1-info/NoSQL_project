@@ -1,0 +1,26 @@
+use("ct620574")
+
+let nb_films = 5
+
+let filter = { 
+    name : "Aubry Samson et Fils",
+}
+
+let query = [
+    { $match : filter },
+    { $unwind: "$films" },
+    { $sort: { "films.recipe": -1 } },
+    { $limit: nb_films },
+    { $project: { "_id": 0, "films.title": 1, "films.recipe": 1 } }
+]
+
+let films = db.cinemas.aggregate(query)
+
+if(films == null){
+    print("Pas de film diffusés dans ce cinéma dans la base de données.")
+} else {
+    print(`Voici les ${nb_films} les plus rentables du cinéma "${filter.name}": `)
+    films.forEach(film => {
+        print(`► "${film.films.title}" avec ${film.films.recipe}€ de recette ` )
+    })
+}

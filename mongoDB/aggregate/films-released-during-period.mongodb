@@ -1,0 +1,22 @@
+use("ct620574")
+
+let filter = { releaseDate : { 
+    $gte: new Date("2010-01-01"),
+    $lte: new Date("2010-12-31")
+} }
+
+let query = [
+    { $match : filter },
+    { $project: { _id: 0, title: 1, releaseDate: 1 } }
+]
+
+let films = db.films.aggregate(query)
+
+if(films == null){
+    print("Il n'y a pas de films sortis pendant cette période dans la base de données.")
+} else {
+    print(`Voici les films sortis entre ${filter.releaseDate.$gte} et le ${filter.releaseDate.$lte} : `)
+    films.forEach(film => {
+        print(`► "${film.title}" sorti le ${film.releaseDate} `)
+    })
+}

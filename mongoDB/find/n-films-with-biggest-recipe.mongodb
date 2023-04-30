@@ -1,0 +1,14 @@
+use("ct620574")
+
+let nb_films = 10
+
+let films = db.films.find({}, {"_id" : 0, "title" : 1, "recipe" : 1}).sort({recipe: -1}).limit(nb_films)
+
+if(films == null){
+    print("Pas de film avec recette dans la base de données.")
+} else {
+    print(`Voici les ${nb_films} films avec les plus grosses recetes : `)
+    films.forEach(film => {
+        print(`► ${film.title} avec ${film.recipe}€ comme recette ` )
+    })
+}
