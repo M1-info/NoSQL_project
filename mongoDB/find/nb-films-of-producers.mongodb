@@ -1,0 +1,10 @@
+use("ct620574")
+
+let filter = {
+    firstName: "David",
+    lastName: "Heyman",
+}
+
+let nb_films = db.films.find({"producers" : filter}, {"_id" : 0, "title" : 1}).count()
+
+print("Nombre de films produits par le realisateur " + filter.firstName + " " + filter.lastName + " : " + nb_films)

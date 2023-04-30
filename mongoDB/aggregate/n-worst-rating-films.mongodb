@@ -1,0 +1,24 @@
+use("ct620574")
+
+let number_of_films = 10
+
+let query = [
+    { $unwind: "$feedbacks" },
+    { $group: { _id: "$title", average_rating : { $avg : "$feedbacks.rating" } } },
+    { $sort: { average_rating : 1} },
+    { $limit: number_of_films},
+    { $project: { _id: 0, title: "$_id", average_rating: 1 } }
+]
+
+let worst_films = db.films.aggregate(query)
+
+if(worst_films == null){
+    print("Il n'y a pas de films notés dans la base de données.")
+} else {
+    print(`Voici les "${number_of_films}" films les moins bien notés : `)
+    worst_films.forEach(film => {
+        let average = film.average_rating
+        average = Math.round(average * 100) / 100
+        print(`► ${film.title} avec une moyenne a ${average} sur 5 `)
+    })
+}

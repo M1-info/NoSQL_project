@@ -1,0 +1,10 @@
+use("ct620574")
+
+let filter = {
+    firstName: "Daniel",
+    lastName : "Radcliffe"
+}
+
+let nb_films = db.films.find({"actors" : filter}, {"_id" : 0, "title" : 1}).count()
+
+print("Nombre de films dans lesquels joue l'acteur : " + filter.firstName + " " + filter.lastName + " : " + nb_films)
