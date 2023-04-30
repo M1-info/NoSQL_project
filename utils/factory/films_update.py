@@ -1,9 +1,9 @@
 import json
 import os
 
-films = json.load(open('../films.json', 'r', encoding='utf8'))
+films = json.load(open('../../data/films.json', 'r', encoding='utf8'))
 
-cinemas = json.load(open('../cinemas.json', 'r', encoding='utf8'))
+cinemas = json.load(open('../../data/cinemas.json', 'r', encoding='utf8'))
 nb_cinemas = len(cinemas)
 
 for i in range(nb_cinemas-1):
@@ -24,4 +24,4 @@ for i in range(nb_cinemas-1):
             current_film['cinemas'].append(cinema['_id'])
 
 
-json.dump(films, open('../films.json', 'w', encoding='utf8'), indent=4, ensure_ascii=False)
+json.dump(films, open('../../data/films.json', 'w', encoding='utf8'), indent=4, ensure_ascii=False)

@@ -38,11 +38,11 @@
                     },
                     "startDiffusion": {
                         "description" : "Date de debut de diffusion",
-                        "bsonType": "string"
+                        "bsonType": "date"
                     },
                     "endDiffusion": {
                         "description" : "Date de fin de diffusion",
-                        "bsonType": "string"
+                        "bsonType": "date"
                     },
                     "numberEntries": {
                         "description" : "Nombre d'entrees",
@@ -66,15 +66,15 @@
                                 },
                                 "dateShow": {
                                     "description" : "Date de projection",
-                                    "bsonType": "string"
+                                    "bsonType": "date"
                                 },
                                 "startShow": {
                                     "description" : "Heure de début de projection",
-                                    "bsonType": "string"
+                                    "bsonType": "date"
                                 },
                                 "endShow": {
                                     "description" : "Heure de fin de projection",
-                                    "bsonType": "string"
+                                    "bsonType": "date"
                                 },
                                 "durationShow": {
                                     "description" : "Duree de projection en minutes",

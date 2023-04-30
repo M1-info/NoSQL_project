@@ -1,24 +1,25 @@
 import faker
 import json
 import os
+import bson
 
 fake = faker.Faker('fr_FR')
 
 films = []
 
-categories = json.load(open('../categories.json', 'r', encoding='utf8'))
+categories = json.load(open('../../data/categories.json', 'r', encoding='utf8'))
 nb_categories = len(categories)
 
-producers = json.load(open('../producers.json', 'r', encoding='utf8'))
+producers = json.load(open('../../data/producers.json', 'r', encoding='utf8'))
 nb_producers = len(producers)
 
-actors = json.load(open('../actors.json', 'r', encoding='utf8'))
+actors = json.load(open('../../data/actors.json', 'r', encoding='utf8'))
 nb_actors = len(actors)
 
 for i in range(500):
     # film general infos
     film = {
-        '_id': fake.unique.pystr(min_chars=10, max_chars=10),
+        '_id': str(bson.ObjectId()),
         'title': fake.sentence(nb_words=3),
         'synopsis': fake.text(),
         'releaseDate': fake.date_between(start_date='-30y', end_date='now').strftime('%Y-%m-%d'),
@@ -77,6 +78,6 @@ for i in range(500):
     films.append(film)
 
 # create json file with films
-filename = os.path.join(os.path.dirname(__file__), '..', 'films.json')
+filename = os.path.join(os.path.dirname(__file__), '../../data', 'films.json')
 with open(filename, 'w', encoding='utf8') as outfile:
     json.dump(films, outfile, indent=4, ensure_ascii=False)

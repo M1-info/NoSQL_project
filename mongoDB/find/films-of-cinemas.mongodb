@@ -1,13 +1,17 @@
 use("ct620574")
 
-filter = {
+let filter = {
     name : "Le Petit Rex"
 }
 
-cinema_id = db.cinemas.find(filter, {"_id" : 1}).toArray()[0]._id
+let projection = {
+    films: {title: 1},
+    city: 1
+}
 
-print("Liste des films diffusés dans ce cinéma: ")
-films = db.films.find({"cinemas" : cinema_id}, {"_id" : 0, "title" : 1}).toArray()
+let cinema = db.cinemas.findOne(filter, projection)
 
-films.forEach(film => { print(film.title) })
+print("Liste des films diffusés dans let cinema " + filter.name + " situé à " + cinema.city + " : ")
+
+cinema.films.forEach(film => { print("► " + film.title) })
 

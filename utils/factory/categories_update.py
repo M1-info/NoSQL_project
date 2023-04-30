@@ -1,9 +1,9 @@
 import json
 import os
 
-categories = json.load(open('../categories.json', 'r', encoding='utf8'))
+categories = json.load(open('../../data/categories.json', 'r', encoding='utf8'))
 
-films = json.load(open('../films.json', 'r', encoding='utf8'))
+films = json.load(open('../../data/films.json', 'r', encoding='utf8'))
 nb_films = len(films)
 
 for i in range(nb_films-1):
@@ -22,6 +22,6 @@ for i in range(nb_films-1):
         current_category['films'].append(film)
 
 # create json file with categories
-filename = os.path.join(os.path.dirname(__file__), '..', 'categories.json')
+filename = os.path.join(os.path.dirname(__file__), '../../data', 'categories.json')
 with open(filename, 'w', encoding='utf8') as outfile:
     json.dump(categories, outfile, indent=4, ensure_ascii=False)

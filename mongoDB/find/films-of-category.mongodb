@@ -1,12 +1,11 @@
 use("ct620574")
 
 filter = {
-    categories : "Fantastique"
+    name : "Fantastique"
 }
 
-films = db.films.find(filter).toArray()
-let nb_films = films.length
+let films = db.categories.findOne(filter).films
 
-print("Nombre de films de la catégorie Fantastique:" + nb_films)
-print("Liste des films de la catégorie Fantastique:")
-films.forEach(film => print(film.title))
+print("Nombre de films de la catégorie " + filter.name + " : " + films.length)
+print("Liste des films de la catégorie " + filter.name + " : ")
+films.forEach(film => print("► " + film.title))

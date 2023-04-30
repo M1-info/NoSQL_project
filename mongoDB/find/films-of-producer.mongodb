@@ -1,11 +1,11 @@
 use("ct620574")
 
-filter = {
+let filter = {
     firstName: "David",
     lastName: "Heyman",
 }
 
-films = db.films.find({"producers" : filter}, {"_id" : 0, "title" : 1}).toArray()
+let films = db.films.find({"producers" : filter}, {"_id" : 0, "title" : 1})
 
 print("Liste des films produits par ce réalisateur : ")
-films.forEach(film => { print(film.title) })
+films.forEach(film => { print("► " + film.title) })

@@ -26,7 +26,7 @@
         },
         "releaseDate": {
             "description": "Date de sortie du film",
-            "bsonType": "string"
+            "bsonType": "date"
         },
         "synopsis": {
             "description": "Synopsis du film",

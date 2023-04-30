@@ -1,12 +1,12 @@
 use("ct620574")
 
-filter = {
+let filter = {
     title : "Harry Potter à l'école des sorciers"
 }
 
-feedbacks = db.films.find(filter, {"_id" : 0, "feedbacks" : 1}).toArray()[0].feedbacks
+let feedbacks = db.films.findOne(filter, {"_id" : 0, "feedbacks" : 1}).feedbacks
 
-print("Liste des commentaires de ce film: ")
+print(`Liste des commentaires du film "${filter.title}" : `)
 feedbacks.forEach(feedback => {
-    print(feedback.comment + " - Note: " + feedback.rating + "/5")
+    print(`► Commentaire : ${feedback.comment} - Note : ${feedback.rating}/5` )
 })

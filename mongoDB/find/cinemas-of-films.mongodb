@@ -1,15 +1,15 @@
 use("ct620574")
 
-filter = {
+let filter = {
     title : "Déchirer emporter."
 }
 
-cinemas = db.films.find(filter, {"_id" : 0, "cinemas" : 1}).toArray()[0].cinemas
+let cinemas = db.films.findOne(filter, {"_id" : 0, "cinemas" : 1})["cinemas"]
 
-print("Liste des cinémas où ce film est diffusé: ")
+print(`Liste des cinémas où le film "${filter.title}" est diffusé: `)
 cinemas.forEach(cinema => {
-    cinema_infos = db.cinemas.find({"_id" : cinema}, {"_id" : 0, "name" : 1, "city" : 1}).toArray()[0]
+    let cinema_infos = db.cinemas.findOne({"_id" : cinema}, {"_id" : 0, "name" : 1, "city" : 1})
     if(cinema_infos != undefined){
-        print("Nom: " + cinema_infos.name + " - Ville: " + cinema_infos.city)
+        print("► Nom: " + cinema_infos.name + " - Ville: " + cinema_infos.city)
     }
 })
