@@ -4,8 +4,13 @@ filter = {
     name : "Fantastique"
 }
 
-let films = db.categories.findOne(filter).films
+let films_query = db.categories.findOne(filter)
+if(films_query == null){
+    print("La catégorie \"" + filter.name + "\" n'existe pas dans la base de données.")
+} else {
+    films = films_query.films
 
-print("Nombre de films de la catégorie " + filter.name + " : " + films.length)
-print("Liste des films de la catégorie " + filter.name + " : ")
-films.forEach(film => print("► " + film.title))
+    print("Nombre de films de la catégorie " + filter.name + " : " + films.length)
+    print("Liste des films de la catégorie " + filter.name + " : ")
+    films.forEach(film => print("► " + film.title))
+}

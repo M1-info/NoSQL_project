@@ -6,8 +6,12 @@ let filter = {
 
 let film_infos = db.films.findOne(filter)
 
-print("Informations du film: " + film_infos.title)
-print("Synopsis: " + film_infos.synopsis)
-print("Date de sortie: " + film_infos.releaseDate)
-print("Durée: " + film_infos.duration + " minutes")
-print("Classé dans les catégories: " + film_infos.categories.join(", "))
+if(film_infos == null){
+    print("Le film \"" + filter.title + "\" n'existe pas dans la base de données.")
+} else {
+    print("Informations du film: " + film_infos.title)
+    print("Synopsis: " + film_infos.synopsis)
+    print("Date de sortie: " + film_infos.releaseDate)  // should be improved
+    print("Durée: " + film_infos.duration + " minutes")
+    print("Classé dans les catégories: " + film_infos.categories.join(", "))
+}

@@ -4,9 +4,14 @@ let filter = {
     title : "Harry Potter à l'école des sorciers"
 }
 
-let feedbacks = db.films.findOne(filter, {"_id" : 0, "feedbacks" : 1}).feedbacks
+let feedbacks_query = db.films.findOne(filter, {"_id" : 0, "feedbacks" : 1})
+if(feedbacks_query == null){
+    print("Le film \"" + filter.title + "\" n'existe pas dans la base de données.")
+} else {
+    feedbacks = feedbacks_query.feedbacks
 
-print(`Liste des commentaires du film "${filter.title}" : `)
-feedbacks.forEach(feedback => {
-    print(`► Commentaire : ${feedback.comment} - Note : ${feedback.rating}/5` )
-})
+    print(`Liste des commentaires du film "${filter.title}" : `)
+    feedbacks.forEach(feedback => {
+        print(`► Commentaire : ${feedback.comment} - Note : ${feedback.rating}/5` )
+    })
+}

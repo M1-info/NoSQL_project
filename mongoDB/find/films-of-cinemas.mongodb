@@ -10,8 +10,9 @@ let projection = {
 }
 
 let cinema = db.cinemas.findOne(filter, projection)
-
-print("Liste des films diffusés dans let cinema " + filter.name + " situé à " + cinema.city + " : ")
-
-cinema.films.forEach(film => { print("► " + film.title) })
-
+if(cinema == null){
+    print("Le cinéma \"" + filter.name + "\" n'existe pas dans la base de données.")
+} else {
+    print("Liste des films diffusés dans let cinema " + filter.name + " situé à " + cinema.city + " : ")
+    cinema.films.forEach(film => { print("► " + film.title) })
+}
