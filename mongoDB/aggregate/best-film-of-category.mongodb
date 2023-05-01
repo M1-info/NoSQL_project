@@ -1,8 +1,8 @@
 use("ct620574")
 
-let filter = {categories: "horror"}
+var filter = {categories: "horror"}
 
-let query = [
+var query = [
     { $match: filter },
     { $unwind: "$feedbacks" },
     { $group: { _id: "$title", average_rating: { $avg: "$feedbacks.rating" } } },
@@ -11,7 +11,7 @@ let query = [
     { $project: { _id: 0, title: "$_id", average_rating: 1 } }
 ]
 
-let best_film = db.films.aggregate(query)
+var best_film = db.films.aggregate(query)
 
 if(best_film == null){
     print("Il n'y a pas de films avec cette catégorie dans la base de données.")

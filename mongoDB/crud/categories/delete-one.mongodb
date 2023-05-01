@@ -1,9 +1,7 @@
 use("ct620574")
 
 // delete the category with the name "Spy"
-let filters = {
-    name : "Spy"
-}
+var filters = {name : "Spy"}
 
 try {
     // delete the category from the films before

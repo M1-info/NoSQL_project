@@ -1,10 +1,10 @@
 use("ct620574")
 
-let projection = {"_id" : 0, "title" : 1, "recipe" : 1}
-let sort = {"recipe" : -1}
-let nb_films = 10
+var projection = {_id : 0, title : 1, recipe : 1}
+var sort = {recipe : -1}
+var nb_films = 10
 
-let films = db.films.find({}, projection).sort(sort).limit(nb_films)
+var films = db.films.find({}, projection).sort(sort).limit(nb_films)
 
 if(films == null){
     print("Pas de film avec recette dans la base de données.")

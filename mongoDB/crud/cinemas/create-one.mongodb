@@ -7,35 +7,33 @@ function addDays(date, days) {
 }
 
 // cinema general informations
-let name = "Le Petit Rex"
-let city = "Dijon"
-let films = []
+var name = "Le Petit Rex"
+var city = "Dijon"
+var films = []
 
 // get some films id
-let films_query = db.films.find({}, {"title": 1 , "releaseDate": 1}).limit(2).toArray()
-let nb_films = films_query.length
+var films_query = db.films.find({}, {"title": 1 , "releaseDate": 1}).limit(2).toArray()
+var nb_films = films_query.length
 
-for (let i = 0; i < nb_films; i++) {
-    //let endDiffusion_date = addDays(films_query[i].releaseDate, 365)
-    //let endDiffusion = endDiffusion_date.toISOString().split('T')[0]
-    let releaseDate = films_query[i].releaseDate
-    let endDiffusion = addDays(releaseDate, 365)
-    start_show_date = releaseDate
+for (var i = 0; i < nb_films; i++) {
+    var startDiffusion = films_query[i].releaseDate
+    var endDiffusion = addDays(startDiffusion, 365)
+    var start_show_date = startDiffusion
     start_show_date.setHours(20)
-    end_show_date = releaseDate
+    var end_show_date = startDiffusion
     end_show_date.setHours(22)
 
-    let film = {
+    var film = {
         title: films_query[i].title,
         film: films_query[i]._id,
-        startDiffusion : releaseDate,
+        startDiffusion,
         endDiffusion,
         numberEntries : 100,
         recipe : 1000,
         filmShow : [
             {
                 salle: 1,
-                dateShow: releaseDate,
+                dateShow: startDiffusion,
                 startShow: start_show_date,   // 20h00
                 endShow: end_show_date,       // 22h00
                 durationShow: 112,
@@ -48,7 +46,7 @@ for (let i = 0; i < nb_films; i++) {
     films.push(film)
 }
 
-let cinema = {
+var cinema = {
     _id: ObjectId().toString(),
     name,
     city,
@@ -58,10 +56,11 @@ let cinema = {
 try {
     db.cinemas.insertOne(cinema)
     // update films numberEntries and recipe
-    for (let i = 0; i < nb_films; i++) {
+    for (var i = 0; i < nb_films; i++) {
         db.films.updateOne(
             { _id: films_query[i]._id },
-            {   $addToSet: { cinemas: cinema._id }, 
+            {   
+                $addToSet: { cinemas: cinema._id }, 
                 $inc: { numberEntries: films[i].numberEntries, recipe: films[i].recipe }
             }
         )

@@ -1,10 +1,10 @@
 use("ct620574")
 
 // categories general informations
-let name = "Spy"
+var name = "Spy"
 
 // create the category object
-let category = { 
+var category = { 
     _id: ObjectId().toString(),
     name
 }

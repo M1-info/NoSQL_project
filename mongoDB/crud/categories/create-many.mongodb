@@ -1,21 +1,13 @@
 use("ct620574")
 
 // names of the categories
-let names = ["Mystery", "Western", "Crime thriller", "Techno thriller", "Zombie horror"]
-let nb_categories = names.length
-let categories = []
+var names = ["Crime thriller", "Techno thriller", "Zombie horror"]
+var categories = []
 
-for (let i = 0; i < nb_categories; i++) {
-    // create the category object
-    let category = { 
-        _id: ObjectId().toString(),
-        name : names[i]
-    }
-
-    categories.push(category)
-}
-
-
+categories = names.map(name => ({
+    _id: ObjectId().toString(),
+    name
+}))
 
 try {
     db.categories.insertMany(categories)

@@ -1,16 +1,14 @@
 use("ct620574")
 
-let filter = {
-    title: "Harry Potter à l'école des sorciers"
-}
+var filter = {title: "Harry Potter à l'école des sorciers"}
 
 
-let film_infos = db.films.findOne(filter)
+var film_infos = db.films.findOne(filter)
 
 if(film_infos == null){
     print("Le film \"" + filter.title + "\" n'existe pas dans la base de données.")
 } else {
-    let date = new Date(film_infos.releaseDate).toLocaleDateString("fr-FR")
+    var date = new Date(film_infos.releaseDate).toLocaleDateString("fr-FR")
     print("Informations du film: " + film_infos.title)
     print("Synopsis: " + film_infos.synopsis)
     print("Date de sortie: " + date) 

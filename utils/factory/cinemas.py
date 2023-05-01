@@ -17,7 +17,7 @@ for i in range(50):
     # general cinema information
     cinema = {
         '_id': str(bson.ObjectId()),
-        'name': fake.company(),
+        'name': fake.unique.company(),
         'city': fake.city(),
         'films': []
     }

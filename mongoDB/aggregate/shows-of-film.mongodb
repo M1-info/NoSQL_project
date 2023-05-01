@@ -1,9 +1,9 @@
 use("ct620574")
 
-let cinema = "Aubry Samson et Fils"
-let film = "Inviter étranger."
+var cinema = "Aubry Samson et Fils"
+var film = "Inviter étranger."
 
-let $project = {
+var $project = {
     _id: 0,
     "dateShow": "$_id",
     showDay: {
@@ -19,7 +19,7 @@ let $project = {
     }
 }
 
-let query = [
+var query = [
     { $unwind: "$films" },
     { $unwind: "$films.filmShow" },
     { $match: { name: cinema, "films.title": film } },
@@ -27,7 +27,7 @@ let query = [
     { $project }
 ]
 
-let shows_days = db.cinemas.aggregate(query)
+var shows_days = db.cinemas.aggregate(query)
 
 print(`Liste des séances du film "${film}" au cinéma "${cinema}" :`)
 shows_days.forEach(diffusion => {

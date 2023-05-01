@@ -1,10 +1,8 @@
 use("ct620574")
 
 // delete categories with this names
-let names = ["Mystery", "Western", "Crime thriller", "Techno thriller", "Zombie horror"]
-let filters = {
-    name : {$in : names}
-}
+var names = ["Mystery", "Western", "Crime thriller", "Techno thriller", "Zombie horror"]
+var filters = {name : {$in : names}}
 
 try {
     // delete the categories from the films before

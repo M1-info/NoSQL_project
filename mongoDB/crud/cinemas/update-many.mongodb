@@ -1,14 +1,8 @@
 use("ct620574")
 
-let filter = {
-    city : "Paris"
-}
+var filter = {city : "Paris"}
 
-let update = {
-    $set: {
-        city : "Paris centre"
-    }
-}
+var update = {$set: {city : "Paris centre"}}
 
 try {
     db.cinemas.updateMany(filter, update)

@@ -1,14 +1,13 @@
 use("ct620574")
 
-let filter = {
-    title : "Harry Potter à l'école des sorciers"
-}
+var filter = {title : "Harry Potter à l'école des sorciers"}
+var projection = {"_id" : 0, "feedbacks" : 1}
 
-let feedbacks_query = db.films.findOne(filter, {"_id" : 0, "feedbacks" : 1})
+var feedbacks_query = db.films.findOne(filter, projection)
 if(feedbacks_query == null){
     print("Le film \"" + filter.title + "\" n'existe pas dans la base de données.")
 } else {
-    let feedbacks = feedbacks_query.feedbacks
+    var feedbacks = feedbacks_query.feedbacks
 
     print(`Liste des commentaires du film "${filter.title}" : `)
     feedbacks.forEach(feedback => {

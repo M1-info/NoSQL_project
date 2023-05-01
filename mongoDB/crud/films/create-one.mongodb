@@ -1,25 +1,19 @@
 use("ct620574")
 
-// function to convert a string to a date
-function str_to_date(str) {
-    let date = str.split("-")
-    return new Date(date[0], date[1] - 1, date[2])
-}
-
 // film general informations
-let film_id = ObjectId().toString()
-let title = "Harry Potter à l'école des sorciers"
-let synopsis = "Harry Potter, un jeune orphelin, est élevé par son oncle Vernon et sa tante Pétunia qui le détestent."
-let releaseDate = str_to_date("2001-11-16")
-let categories = ["Fantastique"]
-let duration = 152
-let numberEntries = 0
-let recipe = 0
-let cinemas = []
+var film_id = ObjectId().toString()
+var title = "Harry Potter à l'école des sorciers"
+var synopsis = "Harry Potter, un jeune orphelin, est élevé par son oncle Vernon et sa tante Pétunia qui le détestent."
+var releaseDate = new Date("2001-11-16")
+var categories = ["Fantastique"]
+var duration = 152
+var numberEntries = 0
+var recipe = 0
+var cinemas = []
 
 
 // film actors and producers
-let actors = [
+var actors = [
     {
         firstName: "Daniel",
         lastName: "Radcliffe",
@@ -34,7 +28,7 @@ let actors = [
     },
 ]
 
-let producers = [
+var producers = [
     {
         firstName: "David",
         lastName: "Heyman",
@@ -47,7 +41,7 @@ let producers = [
 
 
 // film feedbacks
-let feedbacks = [
+var feedbacks = [
     {
         comment: "I love this movie",
         rating: 5,
@@ -67,7 +61,7 @@ let feedbacks = [
 ]
 
 // create the film object
-let film = { 
+var film = { 
     _id: film_id,
     title, 
     synopsis, 
@@ -82,7 +76,7 @@ let film = {
     feedbacks 
 }
 
-let film_category = {
+var film_category = {
     film : film_id,
     title,
     numberEntries,
@@ -93,8 +87,8 @@ try {
     db.films.insertOne(film)
     // add the film to films list of every category
     categories.forEach(category => {
-        let filter = { name: category }
-        let update = { $push: { films: film_category } }
+        var filter = { name: category }
+        var update = { $push: { films: film_category } }
         db.categories.updateOne(filter, update)
     })
 

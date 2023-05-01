@@ -1,14 +1,13 @@
 use("ct620574")
 
-let filter = {
-    name : "Le Petit Rex"
-}
+var filter = {name : "Le Petit Rex"}
+var projection = {films : 1}
 
 try {
     // update films, remove cinema id and decremente numberEntries and recipe
-    let cinema = db.cinemas.find(filter, {"films" : 1}).toArray()[0]
-    let nb_films = cinema.films.length
-    for (let i = 0; i < nb_films; i++) {
+    var cinema = db.cinemas.findOne(filter, projection)
+    var nb_films = cinema.films.length
+    for (var i = 0; i < nb_films; i++) {
         db.films.updateOne(
             { _id: cinema.films[i].film },
             {   $pull: { cinemas: cinema._id },

@@ -1,11 +1,11 @@
 use("ct620574")
 
-let filter = { releaseDate : { 
+var filter = { releaseDate : { 
     $gte: new Date("2010-01-01"),
     $lte: new Date("2010-12-31")
 } }
 
-let query = [
+var query = [
     { $match : filter },
     { $project: {
          _id: 0, 
@@ -15,13 +15,13 @@ let query = [
     }
 ]
 
-let films = db.films.aggregate(query)
+var films = db.films.aggregate(query)
 
 if(films == null){
     print("Il n'y a pas de films sortis pendant cette période dans la base de données.")
 } else {
-    let initDate = filter.releaseDate.$gte.toLocaleDateString("fr-FR")
-    let endDate = filter.releaseDate.$lte.toLocaleDateString("fr-FR")
+    var initDate = filter.releaseDate.$gte.toLocaleDateString("fr-FR")
+    var endDate = filter.releaseDate.$lte.toLocaleDateString("fr-FR")
     print(`Voici les films sortis entre ${initDate} et le ${endDate} : `)
     films.forEach(film => {
         print(`► "${film.title}" - ${film.releaseDate} `)

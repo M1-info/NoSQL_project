@@ -1,12 +1,12 @@
 use("ct620574")
 
-let nb_films = 5
+var nb_films = 5
 
-let filter = { 
+var filter = { 
     name : "Aubry Samson et Fils",
 }
 
-let query = [
+var query = [
     { $match : filter },
     { $unwind: "$films" },
     { $sort: { "films.recipe": -1 } },
@@ -14,7 +14,7 @@ let query = [
     { $project: { "_id": 0, "films.title": 1, "films.recipe": 1 } }
 ]
 
-let films = db.cinemas.aggregate(query)
+var films = db.cinemas.aggregate(query)
 
 if(films == null){
     print("Pas de film diffusés dans ce cinéma dans la base de données.")

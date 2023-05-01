@@ -2,15 +2,9 @@ use("ct620574")
 
 
 // film general update
-let filter = {
-    "actors.lastName": "Radcliffe"
-}
+var filter = {"actors.lastName": "Radcliffe"}
 
-let update = {
-    $set: {
-        "actors.$.lastName": "Radcliffe2"
-    }
-}
+var update = {$set: {"actors.$.lastName": "Radcliffe2"}}
 
 try {
     db.films.updateMany(filter, update)

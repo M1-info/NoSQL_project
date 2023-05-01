@@ -44,6 +44,9 @@ db.create_collection('films', validator={"$jsonSchema":films_schema})
 db.create_collection('categories', validator={"$jsonSchema":categories_schema})
 db.create_collection('cinemas', validator={"$jsonSchema":cinemas_schema})
 
+db.films.create_index([('title', 1)], unique=True)
+db.categories.create_index([('name', 1)], unique=True)
+db.cinemas.create_index([('name', 1)], unique=True)
 
 db.films.insert_many(films)
 db.categories.insert_many(categories)

@@ -1,13 +1,7 @@
 use("ct620574")
 
-// function to convert a string to a date
-function str_to_date(str) {
-    let date = str.split("-")
-    return new Date(date[0], date[1] - 1, date[2])
-}
-
 // film general informations
-let titles = [
+var titles = [
     "Harry Potter et la chambre des secrets", 
     "Harry Potter et le prisonnier d'Azkaban", 
     "Harry Potter et la coupe de feu", 
@@ -17,7 +11,7 @@ let titles = [
     "Harry Potter et les reliques de la mort - Partie 2"
 ]
 
-let synopsises = [
+var synopsises = [
     "Alors que l'oncle Vernon, la tante Pétunia et son cousin Dudley reçoivent d'importants invités à dîner, Harry Potter est contraint de passer la soirée dans sa chambre.",
     "Alors qu'il entame sa deuxième année à Poudlard, Harry Potter découvre un livre de potions magiques appartenant au mystérieux demi-dieu Enricko Prince.",
     "Sirius Black, un dangereux sorcier criminel, s'échappe de la sombre prison d'Azkaban avec un seul et unique but : retrouver Harry Potter, en troisième année à l'école de Poudlard.",
@@ -27,17 +21,17 @@ let synopsises = [
     "Dans la 2e Partie de cet épisode final, le combat entre les puissances du bien et du mal de l'univers des sorciers se transforme en guerre sans merci."
 ]
 
-let releaseDates = [
-    str_to_date("2002-11-04"),
-    str_to_date("2004-11-29"),
-    str_to_date("2005-11-30"),
-    str_to_date("2007-07-11"),
-    str_to_date("2009-07-15"),
-    str_to_date("2010-11-24"),
-    str_to_date("2011-07-13")
+var releaseDates = [
+    new Date("2002-11-04"),
+    new Date("2004-11-29"),
+    new Date("2005-11-30"),
+    new Date("2007-07-11"),
+    new Date("2009-07-15"),
+    new Date("2010-11-24"),
+    new Date("2011-07-13")
 ]
 
-let categories = [
+var categories = [
     ["Fantastique"],
     ["Fantastique"],
     ["Fantastique"],
@@ -47,23 +41,14 @@ let categories = [
     ["Fantastique"]
 ]
 
-let durations = [
-    161,
-    142,
-    141,
-    138,
-    153,
-    146,
-    130
-]
+var durations = [161, 142, 141, 138, 153, 146, 130]
 
-let numberEntries = 0
-let recipe = 0
-let cinemas = []
-
+var numberEntries = 0
+var recipe = 0
+var cinemas = []
 
 // film actors and producers
-let actors = [
+var actors = [
     {
         firstName: "Daniel",
         lastName: "Radcliffe",
@@ -78,7 +63,7 @@ let actors = [
     },
 ]
 
-let producers = [
+var producers = [
     {
         firstName: "David",
         lastName: "Heyman",
@@ -91,7 +76,7 @@ let producers = [
 
 
 // film feedbacks
-let feedbacks = [
+var feedbacks = [
     {
         comment: "I love this movie",
         rating: 5,
@@ -110,52 +95,49 @@ let feedbacks = [
     },
 ]
 
-let films = []
-let films_id = []
+var films_id = []
 
 // create the films objects
-let nb_films = titles.length
-for (let i = 0; i < nb_films; i++) {
-    let id = ObjectId().toString()
+var films = titles.map((title, index) => {
+    var id = ObjectId().toString()
     films_id.push(id)
 
-    let film = {
+    var film = {
         _id: id,
-        title: titles[i],
-        synopsis: synopsises[i],
-        releaseDate: releaseDates[i],
-        duration: durations[i],
+        title: title,
+        synopsis: synopsises[index],
+        releaseDate: releaseDates[index],
+        duration: durations[index],
         numberEntries,
         recipe,
         recipe,
         cinemas,
-        categories : categories[i],
+        categories : categories[index],
         actors,
         producers,
         feedbacks,
     }
-    films.push(film)
-}
+    return film
+})
 
 try {
     db.films.insertMany(films)
     // add all films to films list of every category
-    let nb_films = titles.length
-    for (let i = 0; i < nb_films; i++){
-            
-        let film_category = {
-            film : films_id[i],
-            title : titles[i],
+    
+    films.forEach(film => {
+        var film_category = {
+            film : film._id,
+            title : film.title,
             numberEntries,
             recipe
         }
-
-        categories[i].forEach(category => {
-            let filter = { name: category }
-            let update = { $push: { films: film_category } }
+        
+        film.categories.forEach(category => {
+            var filter = { name: category }
+            var update = { $push: { films: film_category } }
             db.categories.updateOne(filter, update)
         })
-    }
+    })
 } catch (error) {
     print(error.message)
 }

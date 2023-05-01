@@ -1,10 +1,9 @@
 use("ct620574")
 
+var sort = {duration: 1 }
+var projection = {_id: 0, title: 1, duration: 1}
 
-let sort = { "duration": 1 }
-let projection = { _id: 0, title: 1, duration: 1 }
-
-let longest_film = db.films.find({}, projection).sort(sort).limit(1).next()
+var longest_film = db.films.find({}, projection).sort(sort).limit(1).next()
 
 if(!longest_film){
     print("Il n'y a pas de films dans la base de données.")

@@ -1,12 +1,7 @@
 use("ct620574")
 
-let filter = {
-    title : "Harry Potter à l'école des sorciers"
-}
+var filter = {title : "Harry Potter à l'école des sorciers"}
 
-let feedback = {
-    comment: "Pourquoi pas",
-    rating: 4
-}
+var feedback = {comment: "Pourquoi pas", rating: 4}
 
 db.films.updateOne(filter, {$push: {feedbacks: feedback}})

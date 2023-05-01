@@ -1,13 +1,13 @@
-use("ct620574")
+use("ct620574");
 
-let filter = {"films.title" : "Exposer diriger."}
-let projection = {name : 1, city : 1,}
+var filter = {"films.title" : "Feu dormir"};
+var projection = {_id: 0, name : 1, city : 1};
 
-let cinemas = db.cinemas.find(filter, projection).toArray()
+var cinemas = db.cinemas.find(filter, projection).toArray();
 
-if(cinemas.length == 0){
+if(!cinemas.length){ 
     print("Le film \"" + filter["films.title"] + "\" n'existe pas dans la base de données.")
 } else {
-    print(`Liste des cinémas où le film "${filter["films.title"]}" est diffusé: `)
-    cinemas.forEach(cinema => print("► Nom: " + cinema.name + " - Ville: " + cinema.city))
+    print(`Liste des cinémas où le film "${filter["films.title"]}" est diffusé: `);
+    cinemas.forEach(cinema => print("► Nom: " + cinema.name + " - Ville: " + cinema.city));
 }

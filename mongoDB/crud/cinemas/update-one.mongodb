@@ -1,14 +1,8 @@
 use("ct620574")
 
-let filter = {
-    name : "Le Petit Rex"
-}
+var filter = {name : "Le Petit Rex"}
 
-let update = {
-    $set: {
-        city : "Paris"
-    }
-}
+var update = {$set: {city : "Paris"}}
 
 try {
     db.cinemas.updateOne(filter, update)

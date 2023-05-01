@@ -1,13 +1,8 @@
 use("ct620574")
 
-let filter = {
-    producers: {
-        firstName: "David",
-        lastName: "Heyman",
-    }
-}
+var filter = {producers: {firstName: "David", lastName: "Heyman"}}
 
-let nb_films = db.films.countDocuments(filter)
+var nb_films = db.films.countDocuments(filter)
 
-let {firstName, lastName} = filter.producers
+var {firstName, lastName} = filter.producers
 print("Nombre de films produits par le realisateur \"" + firstName + " " + lastName + "\" : " + nb_films)

@@ -20,7 +20,7 @@ for i in range(500):
     # film general infos
     film = {
         '_id': str(bson.ObjectId()),
-        'title': fake.sentence(nb_words=3),
+        'title': fake.unique.sentence(nb_words=3)[0:-1],
         'synopsis': fake.text(),
         'releaseDate': fake.date_between(start_date='-30y', end_date='now').strftime('%Y-%m-%d'),
         'duration': fake.random_int(min=60, max=120),

@@ -1,11 +1,8 @@
 use("ct620574")
 
-let filter = {
-    firstName: "Daniel",
-    lastName : "Radcliffe"
-}
+var filter = {actors: {firstName: "Daniel", lastName : "Radcliffe"}};
+var projection = { _id: 0, title: 1 };
+var films = db.films.find(filter, projection)
 
-let films = db.films.find({"actors" : filter}, {"_id" : 0, "title" : 1}).toArray()
-
-print("Liste des films dans lesquels joue l'acteur : " + filter.firstName + " " + filter.lastName + " : ")
+print("Liste des films dans lesquels joue l'acteur \"" + filter.actors.firstName + " " + filter.actors.lastName + "\" : ")
 films.forEach(film => { print("► " + film.title) })

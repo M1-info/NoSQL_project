@@ -1,8 +1,6 @@
 use("ct620574")
 
-let filters = {
-    title: "Harry Potter à l'école des sorciers"
-}
+var filters = {title: "Harry Potter à l'école des sorciers"}
 
 try {
     // remove film from cinemas first
