@@ -1,10 +1,13 @@
 use("ct620574")
 
 let filter = {
-    firstName: "David",
-    lastName: "Heyman",
+    producers: {
+        firstName: "David",
+        lastName: "Heyman",
+    }
 }
 
-let nb_films = db.films.find({"producers" : filter}, {"_id" : 0, "title" : 1}).count()
+let nb_films = db.films.countDocuments(filter)
 
-print("Nombre de films produits par le realisateur " + filter.firstName + " " + filter.lastName + " : " + nb_films)
+let {firstName, lastName} = filter.producers
+print("Nombre de films produits par le realisateur \"" + firstName + " " + lastName + "\" : " + nb_films)

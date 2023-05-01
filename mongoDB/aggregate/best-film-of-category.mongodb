@@ -1,6 +1,6 @@
 use("ct620574")
 
-let filter = { categories: "horror" }
+let filter = {categories: "horror"}
 
 let query = [
     { $match: filter },

@@ -19,7 +19,7 @@ let films = db.cinemas.aggregate(query)
 if(films == null){
     print("Pas de film diffusés dans ce cinéma dans la base de données.")
 } else {
-    print(`Voici les ${nb_films} les plus rentables du cinéma "${filter.name}": `)
+    print(`Voici les ${nb_films} films les plus rentables du cinéma "${filter.name}": `)
     films.forEach(film => {
         print(`► "${film.films.title}" avec ${film.films.recipe}€ de recette ` )
     })

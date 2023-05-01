@@ -1,28 +1,39 @@
 use("ct620574")
 
+let cinema = "Aubry Samson et Fils"
+let film = "Inviter étranger."
+
+let $project = {
+    _id: 0,
+    "dateShow": "$_id",
+    showDay: {
+        $map: {
+            input: "$showDay",
+            as: "show",
+            in: {
+                price: "$$show.price",
+                startShow: {$dateToString:  {format: "%H:%M", date: "$$show.startShow"}}, 
+                endShow: {$dateToString:  {format: "%H:%M", date: "$$show.endShow"}},
+            }
+        } 
+    }
+}
+
 let query = [
     { $unwind: "$films" },
     { $unwind: "$films.filmShow" },
-    { $match: { name: "Aubry Samson et Fils", "films.title": "Inviter étranger." } },
+    { $match: { name: cinema, "films.title": film } },
     { $group: {_id: "$films.filmShow.dateShow", showDay: { $push: "$films.filmShow" } }},
-    { $project: {
-        _id: {$dateToString: {format: "%Y-%m-%d", date: "$_id"}}, 
-        showDay: {
-            startShow: {$dateToString:  {format: "%H:%M", date: "$startShow"}}, 
-            endShow: {$dateToString:  {format: "%H:%M", date: "$endShow"}}, 
-            price: 1
-    } } }
+    { $project }
 ]
 
-db.cinemas.aggregate(query)
+let shows_days = db.cinemas.aggregate(query)
 
-// let shows_days = db.cinemas.aggregate(query)
-
-// shows_days.forEach(diffusion => {
-//     print("► Séances du " + diffusion._id + " : ")
-//     diffusion.showDay.forEach(show => {
-//         // convert to iso date
-//         let date_start = new Date(show.startShow).toISOString()
-//         print("    ► " + date_start + " - " + show.endShow + " au prix de " + show.price + "€")
-//     })
-// })
+print(`Liste des séances du film "${film}" au cinéma "${cinema}" :`)
+shows_days.forEach(diffusion => {
+    print("► Séances du " + diffusion.dateShow + " : ")
+    diffusion.showDay.forEach(show => {
+        print("    ► " + show.startShow + " - " + show.endShow + " au prix de " + show.price + "€")
+    })
+    print("\n")
+})

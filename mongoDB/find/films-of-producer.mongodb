@@ -7,5 +7,5 @@ let filter = {
 
 let films = db.films.find({"producers" : filter}, {"_id" : 0, "title" : 1})
 
-print("Liste des films produits par ce réalisateur : ")
+print("Liste des films produits par le réalisateur " + filter.firstName + " " + filter.lastName + " :")
 films.forEach(film => { print("► " + film.title) })

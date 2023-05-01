@@ -1,14 +1,12 @@
 use("ct620574")
 
-let query = [
-    { $sort: { "duration": -1 } },
-    { $limit: 1 },
-    { $project: { _id: 0, title: 1, duration: 1 } }
-]
 
-let longest_film = db.films.aggregate(query).next()
+let sort = { "duration": -1 }
+let projection = { _id: 0, title: 1, duration: 1 }
 
-if(longest_film == null){
+let longest_film = db.films.find({}, projection).sort(sort).limit(1).next()
+
+if(!longest_film){
     print("Il n'y a pas de films dans la base de données.")
 } else {
     print(`Le film le plus long de la base de données est "${longest_film.title}" avec ${longest_film.duration} minutes  `)

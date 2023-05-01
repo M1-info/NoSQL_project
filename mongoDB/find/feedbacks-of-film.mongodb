@@ -8,7 +8,7 @@ let feedbacks_query = db.films.findOne(filter, {"_id" : 0, "feedbacks" : 1})
 if(feedbacks_query == null){
     print("Le film \"" + filter.title + "\" n'existe pas dans la base de données.")
 } else {
-    feedbacks = feedbacks_query.feedbacks
+    let feedbacks = feedbacks_query.feedbacks
 
     print(`Liste des commentaires du film "${filter.title}" : `)
     feedbacks.forEach(feedback => {

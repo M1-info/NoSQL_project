@@ -1,6 +1,6 @@
 use("ct620574")
 
-filter = {
+let filter = {
     name : "Fantastique"
 }
 
@@ -8,7 +8,7 @@ let films_query = db.categories.findOne(filter)
 if(films_query == null){
     print("La catégorie \"" + filter.name + "\" n'existe pas dans la base de données.")
 } else {
-    films = films_query.films
+    let films = films_query.films
 
     print("Nombre de films de la catégorie " + filter.name + " : " + films.length)
     print("Liste des films de la catégorie " + filter.name + " : ")

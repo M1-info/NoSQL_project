@@ -1,21 +1,13 @@
 use("ct620574")
 
-let filter = {
-    //title : "Harry Potter à l'école des sorciers" //no cinemas
-    title : "Exposer diriger."
-}
+let filter = {"films.title" : "Exposer diriger."}
+let projection = {name : 1, city : 1,}
 
-let cinemas_query = db.films.findOne(filter, {"_id" : 0, "cinemas" : 1})
-if(cinemas_query == null){
-    print("Le film \"" + filter.title + "\" n'existe pas dans la base de données.")
+let cinemas = db.cinemas.find(filter, projection).toArray()
+
+if(cinemas.length == 0){
+    print("Le film \"" + filter["films.title"] + "\" n'existe pas dans la base de données.")
 } else {
-    cinemas = cinemas_query["cinemas"]
-    
-    print(`Liste des cinémas où le film "${filter.title}" est diffusé: `)
-    cinemas.forEach(cinema => {
-        let cinema_infos = db.cinemas.findOne({"_id" : cinema}, {"_id" : 0, "name" : 1, "city" : 1})
-        if(cinema_infos != undefined){
-            print("► Nom: " + cinema_infos.name + " - Ville: " + cinema_infos.city)
-        }
-    })
+    print(`Liste des cinémas où le film "${filter["films.title"]}" est diffusé: `)
+    cinemas.forEach(cinema => print("► Nom: " + cinema.name + " - Ville: " + cinema.city))
 }

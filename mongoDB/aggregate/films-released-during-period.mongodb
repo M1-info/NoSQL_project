@@ -7,7 +7,12 @@ let filter = { releaseDate : {
 
 let query = [
     { $match : filter },
-    { $project: { _id: 0, title: 1, releaseDate: 1 } }
+    { $project: {
+         _id: 0, 
+         title: 1,
+         releaseDate: {$dateToString: {format: "%d-%m-%Y", date: "$releaseDate"}}
+        } 
+    }
 ]
 
 let films = db.films.aggregate(query)
@@ -15,8 +20,10 @@ let films = db.films.aggregate(query)
 if(films == null){
     print("Il n'y a pas de films sortis pendant cette période dans la base de données.")
 } else {
-    print(`Voici les films sortis entre ${filter.releaseDate.$gte} et le ${filter.releaseDate.$lte} : `)
+    let initDate = filter.releaseDate.$gte.toLocaleDateString("fr-FR")
+    let endDate = filter.releaseDate.$lte.toLocaleDateString("fr-FR")
+    print(`Voici les films sortis entre ${initDate} et le ${endDate} : `)
     films.forEach(film => {
-        print(`► "${film.title}" sorti le ${film.releaseDate} `)
+        print(`► "${film.title}" - ${film.releaseDate} `)
     })
 }

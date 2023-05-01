@@ -15,7 +15,7 @@ let worst_films = db.films.aggregate(query)
 if(worst_films == null){
     print("Il n'y a pas de films notés dans la base de données.")
 } else {
-    print(`Voici les "${number_of_films}" films les moins bien notés : `)
+    print(`Voici les ${number_of_films} films les moins bien notés : `)
     worst_films.forEach(film => {
         let average = film.average_rating
         average = Math.round(average * 100) / 100

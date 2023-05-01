@@ -7,7 +7,12 @@ let query = [
     { $group: { _id: "$title", average_rating: { $avg: "$feedbacks.rating" } } },
     { $sort: { average_rating: -1 } },
     { $limit: number_of_films },
-    { $project: { _id: 0, title: "$_id", average_rating: 1 } }
+    { $project: { 
+        _id: 0, 
+        title: "$_id", 
+        average_rating: {$round: ["$average_rating", 2]} 
+        } 
+    }
 ]
 
 let best_films = db.films.aggregate(query)
@@ -17,8 +22,6 @@ if(best_films == null){
 } else {
     print(`Voici les "${number_of_films}" films les mieux notés : `)
     best_films.forEach(film => {
-        let average = film.average_rating
-        average = Math.round(average * 100) / 100
-        print(`► ${film.title} avec une moyenne a ${average} sur 5 `)
+        print(`► ${film.title} avec une moyenne a ${film.average_rating} sur 5 `)
     })
 }

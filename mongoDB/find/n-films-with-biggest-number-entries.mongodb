@@ -1,13 +1,15 @@
 use("ct620574")
 
+let projection = {"_id" : 0, "title" : 1, "numberEntries" : 1}
+let sort = {"recipe" : -1}
 let nb_films = 10
 
-let films = db.films.find({}, {"_id" : 0, "title" : 1, "numberEntries" : 1}).sort({recipe: -1}).limit(nb_films)
+let films = db.films.find({}, projection).sort(sort).limit(nb_films)
 
 if(films == null){
-    print("Pas de film avec numbre d'entrées dans la base de données.")
+    print("Pas de film avec nombre d'entrées dans la base de données.")
 } else {
-    print(`Voici les ${nb_films} films avec le plus d'entrées : `)
+    print(`Liste des ${nb_films} films avec le plus d'entrées : `)
     films.forEach(film => {
         print(`► ${film.title} avec ${film.numberEntries} entrées ` )
     })
