@@ -11,6 +11,10 @@ fake = faker.Faker('fr_FR')
 
 cinemas = []
 
+cities = [ "Dijon", "Paris", "Besançon", "Lyon", "Marseille" ]
+possible_shows = [ "10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00" ]
+
+
 films = json.load(open('../../data/films.json', 'r', encoding='utf8'))
 
 for i in range(50):
@@ -18,7 +22,7 @@ for i in range(50):
     cinema = {
         '_id': str(bson.ObjectId()),
         'name': fake.unique.company(),
-        'city': fake.city(),
+        'city': cities[fake.random_int(min=0, max=len(cities)-1)],
         'films': []
     }
 
@@ -46,8 +50,8 @@ for i in range(50):
                 end_date=film_date_end_diffusion
             )
 
-            start_show = fake.time(pattern="%H:%M", end_datetime=None)
-            start_show_datetime = datetime.datetime.strptime(start_show, "%H:%M")
+            show_time = possible_shows[fake.random_int(min=0, max=len(possible_shows)-1)]
+            start_show_datetime = datetime.datetime.strptime(show_time, "%H:%M")
             start_time = datetime.time(start_show_datetime.hour, start_show_datetime.minute)
             start_show_date = datetime.datetime.combine(date_show, start_time)
             end_show = start_show_date + datetime.timedelta(minutes=film_duration)
