@@ -1,7 +1,7 @@
 use("ct620574")
 
 var cinema_filter = { 
-    name : "Bousquet S.A.R.L.",
+    name : "Charpentier et Fils",
 }
 
 var film_filter = { "films.filmShow.dateShow" : {

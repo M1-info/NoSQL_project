@@ -1,6 +1,6 @@
 use("ct620574")
 
-var filter = {name : "Le Petit Rex"}
+var filter = {name : "Charpentier et Fils"}
 
 var projection = {films: {title: 1}, city: 1}
 

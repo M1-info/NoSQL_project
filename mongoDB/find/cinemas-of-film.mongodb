@@ -1,6 +1,6 @@
 use("ct620574");
 
-var filter = {"films.title" : "Feu dormir"};
+var filter = {"films.title" : "Arbre durer"};
 var projection = {_id: 0, name : 1, city : 1};
 
 var cinemas = db.cinemas.find(filter, projection).toArray();

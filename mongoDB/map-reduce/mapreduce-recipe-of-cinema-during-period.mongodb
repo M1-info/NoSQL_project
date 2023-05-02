@@ -1,6 +1,6 @@
 use("ct620574")
 
-const cinema_name = "Bousquet S.A.R.L."
+const cinema_name = "Charpentier et Fils"
 const start_date = new Date("2010-01-01")
 const end_date = new Date("2020-12-31")
 

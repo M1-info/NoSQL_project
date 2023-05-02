@@ -5,7 +5,7 @@ from MongoDB import Mongo
 
 mongo = Mongo()
 
-cinema = 'Bousquet S.A.R.L.'
+cinema = 'Charpentier et Fils'
 
 pipeline = [
     {'$match': {'name': cinema}},
