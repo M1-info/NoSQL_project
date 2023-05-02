@@ -1,7 +1,7 @@
 use("ct620574")
 
 var cinema_filter = { 
-    name : "Aubry Samson et Fils",
+    name : "Bousquet S.A.R.L.",
 }
 
 var film_filter = { "films.filmShow.dateShow" : {
