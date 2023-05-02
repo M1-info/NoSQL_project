@@ -1,0 +1,34 @@
+use("ct620574")
+
+const cinema_name = "Bousquet S.A.R.L."
+const start_date = new Date("2010-01-01")
+const end_date = new Date("2020-12-31")
+
+var map = function() {
+    var key = this.name;
+    var value = this.films.reduce((total, film) => 
+        total + film.filmShow.reduce((acc, show) => 
+            (show.dateShow >= start_date && show.dateShow <= end_date) ? acc + show.recipe : acc, 
+        0), 0)
+
+    // filtre sur le cinéma et la période
+    if(this.name == cinema_name){
+        emit(key, value);
+    }
+}
+
+var reduce = function(key, values) {
+    return Array.sum(values);
+}
+
+
+var result = db.cinemas.mapReduce(map, reduce, { out: {inline : 1}, scope: {start_date, end_date, cinema_name} })
+
+if(!result || !result.results.length){
+    print("Pas de recette pendant cette période pour ce cinéma dans la base de données.")
+} else {
+    var recipe = result.results[0].value
+    var initDate = start_date.toLocaleDateString("fr-FR")
+    var endDate = end_date.toLocaleDateString("fr-FR")
+    print(`► "Le cinéma "${cinema_name}" a réalisé un bénéfice de ${recipe}€ pendant la période ${initDate} - ${endDate}` )
+}

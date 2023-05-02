@@ -1,0 +1,35 @@
+use("ct620574")
+
+var cinema_filter = { 
+    name : "Bousquet S.A.R.L.",
+}
+
+var query = [
+    { $match: cinema_filter },
+    { $unwind: "$films" },
+    { $lookup: {
+            from: "films",
+            let: { filmId: "$films.film" },
+            pipeline: [
+                { $match : { $expr: { $eq: [ "$_id", "$$filmId" ] } } },
+                { $project : { "_id" : 0, "categories" : 1 } }
+            ],
+            as: "film_categories"
+        }
+    },
+    { $unwind: "$film_categories" },
+    { $unwind: "$film_categories.categories" },
+    { $group: { 
+            "_id": "$film_categories.categories", 
+            "avg_nbEntries" : {$avg : "$films.numberEntries"}
+        } 
+    },
+    { $project: { 
+        "_id" : 0, 
+        "category" : "$_id", 
+        "avg_nbEntries" : { $round : ["$avg_nbEntries", 0] } 
+    } },
+    { $sort: { "avg_nbEntries" : -1 } }
+]
+
+db.cinemas.aggregate(query)
