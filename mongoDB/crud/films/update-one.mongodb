@@ -2,9 +2,9 @@ use("ct620574")
 
 
 // film general update
-var filter = {title: "Harry Potter et la chambre des secrets"}
+var filter = {title: "Environ"}
 
-var update = {$set: {synopsis: "Synopsis du film Harry Potter et la chambre des secrets"}}
+var update = {$set: {releaseDate: new Date("2010-12-27")}, $unset: {dateRelease: ""}}
 
 // check if we need to update global informations in other collections
 var needGlobalUpdate = ["title", "recipe", "numberEntries"]

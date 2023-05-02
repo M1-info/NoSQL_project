@@ -11,7 +11,7 @@ class DotEnv:
         def load():
             file = os.path.join(os.path.dirname(__file__), '..', '.env')
             if os.path.isfile(file):
-                print('Loading environment from .env file')
+
                 with open(file) as f:
                     for line in f:
                         var = line.strip().split('=', 1)
