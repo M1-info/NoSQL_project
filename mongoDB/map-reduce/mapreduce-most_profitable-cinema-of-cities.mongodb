@@ -1,0 +1,12 @@
+use("ct620574")
+
+var map = function () {
+    // emit (ville, {recette, nom_cinema})
+}
+
+
+var reduce = function (key, values) {
+
+}
+
+db.cinemas.mapReduce(map, reduce, { out: { inline: 1 } })

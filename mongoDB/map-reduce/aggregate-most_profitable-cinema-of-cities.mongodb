@@ -1,0 +1,16 @@
+use("ct620574")
+
+let query = [
+    { $unwind: "$films" },
+    { $group: { "_id": "$name", "recipe": { $sum: "$films.recipe" }, "city": { $first: "$city" }, "name": { $first: "$name" } } },
+    {
+        $group: {
+            "_id": "$city",
+            "best_cinema": { $max: { "name": "$name", "recipe": "$recipe" } },
+        }
+    },
+    { $sort: { "best_cinema.recipe": -1 } },
+    { $project: { "_id": 0, "city": "$_id", "best_cinema": 1 } }
+]
+
+db.cinemas.aggregate(query)
