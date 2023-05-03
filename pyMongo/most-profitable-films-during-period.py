@@ -3,7 +3,6 @@ sys.path.append('../utils')
 
 from MongoDB import Mongo
 from datetime import datetime
-from pprint import pprint
 
 mongo = Mongo()
 
