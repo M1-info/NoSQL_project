@@ -1,12 +1,28 @@
 use("ct620574")
 
 var map = function () {
-    // emit (ville, {recette, nom_cinema})
+    var recipe = this.films.reduce((acc, film) => (acc += film.recipe), 0)
+    emit(this.city, {recipe, name: this.name})
 }
 
 
 var reduce = function (key, values) {
-
+    var best_cinema = values.reduce((acc, cinema) => (
+        acc.recipe > cinema.recipe ? acc : cinema
+    ), {recipe: 0, name: ''})
+    return {key, best_cinema}
 }
 
-db.cinemas.mapReduce(map, reduce, { out: { inline: 1 } })
+db.cinemas.mapReduce(map, reduce, { out: "most_profitable_cinema_of_cities"})
+
+var result = db.most_profitable_cinema_of_cities.find({}, { _id: 0, value: 1 }).sort({ "value.best_cinema.recipe": -1})
+
+print("Cinéma le plus rentable de chaque ville :\n") 
+result.forEach((city) => {
+    print("Ville : " + city.value.key)
+    print("Cinéma : " + city.value.best_cinema.name)
+    print("Recette : " + city.value.best_cinema.recipe)
+    print("")
+})
+
+db.most_profitable_cinema_of_cities.drop()
