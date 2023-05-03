@@ -1,0 +1,32 @@
+use('ct620574')
+
+var cinema = "Charpentier et Fils"
+
+var pipeline = [
+    {$match: {name: cinema}},
+    {$unwind: "$films"},
+    {$group: {
+        _id: null,
+        number_of_films: {$sum: 1},
+        number_of_entries: {$sum: "$films.numberEntries"},
+        total_recipe: {$sum: "$films.recipe"}
+    }},
+    {$project: {
+        _id: 0,
+        number_of_films: 1,
+        number_of_entries: 1,
+        total_recipe: 1,
+        average_entries: {$round : [{$divide: ["$number_of_entries", "$number_of_films"]}, 2]},
+        average_recipe: {$round: [{$divide: ["$total_recipe", "$number_of_films"]}, 2]}
+    }}
+]
+
+var result = db.cinemas.aggregate(pipeline).next()
+
+print("Informations du cinéma " + cinema + " :")
+print("Nombre de films : " + result.number_of_films)
+print("Nombre d'entrées : " + result.number_of_entries)
+print("Recette totale : " + result.total_recipe)
+print("Nombre moyen d'entrées par film : " + result.average_entries)
+print("Recette moyenne par film : " + result.average_recipe)
+
