@@ -29,7 +29,7 @@ pipeline = [
 
 result = mongo.db.films.aggregate(pipeline)
 
-print("Les films les plus rentables sont pour la période du "+ start_date.strftime("%d-%m-%%Y") +" au "+ end_date.strftime("%d-%m-%Y") +" sont : \n")
+print("Les films les plus rentables sont pour la période du "+ start_date.strftime("%d-%m-%Y") +" au "+ end_date.strftime("%d-%m-%Y") +" sont : \n")
 for doc in result:
     print("Films sortis le " + doc['releaseDate'] + " : \n")
     for film in doc['films']:
