@@ -20,3 +20,14 @@ var update = {
 }
 
 db.cinemas.updateOne(filter, update)
+
+// update film numberEntries and recipe
+var filter_film = {title: filter['films.title']}
+var update_film = {
+    $inc: {
+        numberEntries: 110,
+        recipe: 110 * show_price
+    }
+}
+
+db.films.updateOne(filter_film, update_film)

@@ -1,5 +1,6 @@
 use("ct620574")
 
+
 var show = {
     dateShow: new Date("2020-01-01"),
     salle: 5,
@@ -11,13 +12,13 @@ var show = {
     recipe: 0
 };
 
-var filter = {
+var filter_cinema = {
     name: "Le Petit Rex",
     'films.title': 'Harry Potter et la Chambre des Secrets'
 };
 
-var update = {
-    'films.$.filmShow': {$push: show}
+var update_cinema = {
+    $addToSet: {'films.$.filmShow': show }
 };
 
-db.cinemas.updateOne(filter, update);
+db.cinemas.updateOne(filter_cinema, update_cinema);

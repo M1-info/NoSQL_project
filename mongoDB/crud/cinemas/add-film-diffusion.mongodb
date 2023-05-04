@@ -13,4 +13,12 @@ var diffusion = {
     filmShow: []
 }
 
-db.cinemas.updateOne(filter_cinema, {'films': {$push: diffusion}})
+var update_cinema = {$addToSet: { 'films': diffusion }}
+db.cinemas.updateOne(filter_cinema, update_cinema)
+
+// add cinema ref to film
+var id_cinema = db.cinemas.findOne(filter_cinema, {_id: 1})._id;
+var filter_film = {title: filter['films.title']};
+var update_film = {$addToSet: { 'cinemas': id_cinema }};
+
+db.films.updateOne(filter_film, update_film);
