@@ -28,3 +28,5 @@ result = mongo.db.films.aggregate(pipeline)
 print("Les " + str(nb_films) + " films les mieux notés de " + producer['firstName'] + " " + producer['lastName'] + " sont : \n")
 for doc in result:
     print("Film : " + doc['_id'] + " (" + str(doc['average_rating']) + "/5)")
+
+mongo.close()

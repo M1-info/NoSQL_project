@@ -41,3 +41,5 @@ for doc in result:
     print("     Nombre de séances : " + str(doc['number-of_shows']))
     print("     Nombre moyen d'entrées par séance : " + str(doc['average_number_of_entries']))
     print("")
+
+mongo.close()

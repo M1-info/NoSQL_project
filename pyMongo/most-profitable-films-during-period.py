@@ -37,3 +37,5 @@ for doc in result:
         print("     Recette totale : " + str(film['recipe']) + "€")
         print("     Nombre d'entrées total : " + str(film['numberEntries']))
         print("")
+
+mongo.close()

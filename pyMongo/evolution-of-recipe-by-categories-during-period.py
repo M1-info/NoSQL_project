@@ -41,5 +41,4 @@ for doc in result:
     print("     Nombre d'entrées total : " + str(doc['numberEntries']))
     print("")
 
-    
-
+mongo.close()

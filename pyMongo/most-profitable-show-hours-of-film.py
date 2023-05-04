@@ -39,3 +39,5 @@ for doc in result:
     print("     Nombre de séances : {}".format(doc['numberShows']))
     print("     Nombre moyen d'entrées par séance : {}".format(doc['enterPerShow']))
     print()
+
+mongo.close()

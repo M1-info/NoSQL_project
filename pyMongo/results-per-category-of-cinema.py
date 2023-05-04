@@ -92,5 +92,4 @@ for doc in result['categories']:
     print('     Pourcentage de recette : ' + str(doc['percent_recipe']))
     print('\n')
 
-
-
+mongo.close()

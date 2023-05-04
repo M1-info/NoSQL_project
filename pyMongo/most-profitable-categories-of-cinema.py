@@ -55,5 +55,3 @@ for doc in result:
     print("")
 
 mongo.close()
-
-    

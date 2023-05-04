@@ -34,3 +34,5 @@ for doc in result:
     print("     Nombre d'entrées total : " + str(doc['total_number_entries']))
     print("     Nombre de films : " + str(doc['number_of_films']))
     print("")
+
+mongo.close()
