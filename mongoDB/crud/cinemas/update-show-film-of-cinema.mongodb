@@ -1,0 +1,22 @@
+use("ct620574")
+
+var filter = {
+    name: "Le Petit Rex",
+    'films.title': 'Harry Potter et la Chambre des Secrets',
+    'films.filmShow.dateShow': new Date("2020-01-01"),
+    'films.filmShow.startShow': new Date("2020-01-01T16:00:00"),
+    'films.filmShow.endShow': new Date("2020-01-01T17:32:00"),
+}
+
+var show_price = db.cinemas.findOne(filter, {'films.$.filmShow.$.price': 1})
+
+var update = {
+    $inc: {
+        'films.$.filmShow.$.numberEntries': 110,
+        'films.$.filmShow.$.recipe': 110 * show_price,
+        'films.$.numberEntries': 110,
+        'films.$.recipe': 110 * show_price
+    }
+}
+
+db.cinemas.updateOne(filter, update)

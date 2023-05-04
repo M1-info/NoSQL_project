@@ -1,0 +1,23 @@
+use("ct620574")
+
+var show = {
+    dateShow: new Date("2020-01-01"),
+    salle: 5,
+    startShow: new Date("2020-01-01T16:00:00"),
+    endShow: new Date("2020-01-01T17:32:00"),
+    durationShow: 92,
+    numberEntries: 0,
+    price: 12,
+    recipe: 0
+};
+
+var filter = {
+    name: "Le Petit Rex",
+    'films.title': 'Harry Potter et la Chambre des Secrets'
+};
+
+var update = {
+    'films.$.filmShow': {$push: show}
+};
+
+db.cinemas.updateOne(filter, update);

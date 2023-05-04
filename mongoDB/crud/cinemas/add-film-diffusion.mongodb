@@ -1,0 +1,16 @@
+use("ct620574")
+
+var filter_film = {title : "Harry Potter et la Chambre des Secrets"}
+var filter_cinema = {name : "Le Petit Rex"}
+
+var film = db.films.findOne(filter_film)
+
+var diffusion = {
+    film: film._id,
+    title: film.title,
+    recipe: 0,
+    numberEntries: 0,
+    filmShow: []
+}
+
+db.cinemas.updateOne(filter_cinema, {'films': {$push: diffusion}})

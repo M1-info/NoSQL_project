@@ -1,0 +1,30 @@
+use("ct620574")
+
+var cinema_name = "Charpentier et Fils"
+
+var pipeline = [
+    {$match: {name: cinema_name}},
+    {$unwind: "$films"},
+    {$unwind: "$films.filmShow"},
+    {$group: {
+        _id: "$films.filmShow.salle",
+        recipe: {$sum: "$films.filmShow.recipe"},
+        numberEntries: {$sum: "$films.filmShow.numberEntries"},
+        numberFilms: {$sum: 1}
+    }},
+]
+
+var result = db.cinemas.aggregate(pipeline).toArray()
+
+var current_salle = null
+print("Informations sur la rentabilité des salles du Cinéma " + cinema_name + ":")
+result.forEach(function (doc) {
+    if (doc["_id"] !== current_salle) {
+        current_salle = salle
+        print("Salle " + doc["_id"] + ":")
+    }
+    print("\tNombre de films: " + doc["numberFilms"])
+    print("\tNombre d'entrées: " + doc["numberEntries"])
+    print("\tRecette: " + doc["recipe"] + "€")
+    print("")
+})
