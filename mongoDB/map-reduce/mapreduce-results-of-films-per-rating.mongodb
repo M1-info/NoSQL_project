@@ -1,0 +1,45 @@
+use("ct620574")
+
+var map = function() { 
+    var avg = this.feedbacks.reduce((acc, feedback) => acc + feedback.rating, 0) / this.feedbacks.length;
+    avg = Math.round(avg);
+    var film = {
+        recipe: this.recipe,
+        numberEntries: this.numberEntries
+    }
+    emit(avg, film)
+}
+
+var reduce = function(key, values) { 
+    var avg = values.reduce((acc, value) => ({
+        recipe: acc.recipe + value.recipe, 
+        numberEntries: acc.numberEntries + value.numberEntries
+    }),{
+        repice: 0, numberEntries: 0
+    })
+    avg = {
+        recipe: avg.recipe / values.length, numberEntries: avg.numberEntries / values.length
+    }
+    return {key, avg}
+} 
+
+var result = db.films.mapReduce(map, reduce, {out: {inline: 1}, })
+
+var current_rating = null
+print("")
+print("Résultats globaux par note : ")
+result.results.forEach(doc => {
+    if (doc['_id'] != current_rating) {
+        current_rating = Math.round(doc['_id'])
+        print("Note : ", current_rating)
+        print("     Nombre de films ayant cette note : " + doc['nb_notations'])
+    }
+    else if (doc['_id'] == null) {
+        print("Note : Non noté")
+        print("     Nombre de films non notés : " + doc['nb_notations'])
+    }
+
+    print("     Recette moyenne : " + Math.round(doc['average_recipe']) + "€")
+    print("     Nombre d'entrées moyen : " + Math.round(doc['average_numberEntries']) + " personnes")
+    print("\n")
+});

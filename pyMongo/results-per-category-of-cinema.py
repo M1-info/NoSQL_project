@@ -2,13 +2,10 @@ import sys
 sys.path.append('../utils')
 
 from MongoDB import Mongo
-from pprint import pprint
-
 
 mongo = Mongo()
 
 cinema = 'Charpentier et Fils'
-
 
 # get in percentage the recipe and number of entries per category
 pipeline = [

@@ -1,0 +1,39 @@
+use("ct620574")
+
+var pipeline = [
+    {$project: {
+        '_id': 0,
+        'title': 1,
+        'average_rating': {$round : [{$avg: '$feedbacks.rating'}, 0]},
+        'recipe': 1,
+        'numberEntries': 1,
+    }},
+    {$group: {
+        '_id': '$average_rating',
+        'nb_notations': {$sum: 1},
+        'average_recipe': {$avg: '$recipe'},
+        'average_numberEntries': {$avg: '$numberEntries'},
+    }},
+    {$sort: {'_id': 1}}
+]
+
+var result = db.films.aggregate(pipeline)
+
+var current_rating = null
+print("")
+print("Résultats globaux par note : ")
+result.forEach(doc => {
+    if (doc['_id'] != current_rating) {
+        current_rating = Math.round(doc['_id'])
+        print("Note : ", current_rating)
+        print("     Nombre de films ayant cette note : " + doc['nb_notations'])
+    }
+    else if (doc['_id'] == null) {
+        print("Note : Non noté")
+        print("     Nombre de films non notés : " + doc['nb_notations'])
+    }
+    
+    print("     Recette moyenne : " + Math.round(doc['average_recipe']) + "€")
+    print("     Nombre d'entrées moyen : " + Math.round(doc['average_numberEntries']) + " personnes")
+    print("\n")
+});
