@@ -2,6 +2,7 @@ import sys
 sys.path.append('../utils')
 
 from MongoDB import Mongo
+from matplotlib import pyplot as plt
 
 mongo = Mongo()
 
@@ -88,5 +89,32 @@ for doc in result['categories']:
     print('     Pourcentage d\'entrées : ' + str(doc['percent_numberEntries']))
     print('     Pourcentage de recette : ' + str(doc['percent_recipe']))
     print('\n')
+
+
+# plot the results
+
+# change the plot style
+plt.style.use('ggplot')
+
+# create the figure
+labels = []
+sizes = []
+for doc in result['categories']:
+    labels.append(doc['category'])
+    sizes.append(doc['percent_recipe'])
+
+fig1, ax1 = plt.subplots()
+
+ax1.pie(sizes, labels=labels, autopct='%1.1f%%', shadow=False, startangle=90)
+ax1.axis('equal')
+
+# make the plot full screen
+manager = plt.get_current_fig_manager()
+manager.resize(*manager.window.maxsize())
+
+# show the plot
+plt.title('Recette par catégorie de film du cinéma "' + cinema + '"', loc='center', pad=30)
+plt.legend(loc = 'upper right', labels=['%s, %1.1f %%' % (l, s) for l, s in zip(labels, sizes)])
+plt.show()
 
 mongo.close()

@@ -7,22 +7,21 @@ const end_date = new Date("2020-12-31")
 var map = function() {
     var key = this.name;
     var value = this.films.reduce((total, film) => 
-        total + film.filmShow.reduce((acc, show) => 
-            (show.dateShow >= start_date && show.dateShow <= end_date) ? acc + show.recipe : acc, 
-        0), 0)
+        total + film.filmShow.reduce((acc, show) => acc + show.recipe, 0), 0)
 
-    // filtre sur le cinéma et la période
-    if(this.name == cinema_name){
-        emit(key, value);
-    }
+    emit(key, value);
 }
 
 var reduce = function(key, values) {
     return Array.sum(values);
 }
 
+var options = {
+    out: {inline : 1},
+    query: {name: cinema_name, "films.filmShow.dateShow": {$gte: start_date, $lte: end_date}}
+}
 
-var result = db.cinemas.mapReduce(map, reduce, { out: {inline : 1}, scope: {start_date, end_date, cinema_name} })
+var result = db.cinemas.mapReduce(map, reduce, options)
 
 if(!result || !result.results.length){
     print("Pas de recette pendant cette période pour ce cinéma dans la base de données.")

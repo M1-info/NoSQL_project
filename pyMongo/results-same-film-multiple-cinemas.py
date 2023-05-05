@@ -2,10 +2,11 @@ import sys
 sys.path.append('../utils')
 
 from MongoDB import Mongo
+from matplotlib import pyplot as plt
 
 mongo = Mongo()
 
-film = 'Arbre durer'
+film = 'Demain révolution'
 
 pipeline = [
     {'$unwind': '$films'},
@@ -31,14 +32,34 @@ pipeline = [
 ]
 
 result = mongo.db.cinemas.aggregate(pipeline)
+data = list(result)
 
 print("Résultats pour le film \"" + film + "\" :\n")
-for doc in result:
+for doc in data:
     print("Cinema \"" + doc['name'] + "\" :")
     print("     Nombre de séances : " + str(doc['numberSessions']))
     print("     Prix moyen séance: " + str(doc['average_price']) + "€")
     print("     Recette : " + str(doc['recipe']) + "€")
     print("     Nombre d'entrées : " + str(doc['numberEntries']))
     print("")
+
+# plot the results in histogram
+fig, ax = plt.subplots()
+
+y = [doc["recipe"] for doc in data]
+x = [doc["name"] for doc in data]
+
+ax.bar(x, y, color='green', width=0.5)
+
+ax.set_xlabel('Cinéma')
+ax.set_ylabel('Recette (€)')
+
+ax.set_title('Recette du film "' + film + '" par cinéma')
+
+# open window full screen
+manager = plt.get_current_fig_manager()
+manager.resize(*manager.window.maxsize())
+
+plt.show()
 
 mongo.close()

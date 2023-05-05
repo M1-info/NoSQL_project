@@ -1,9 +1,9 @@
 import sys
 sys.path.append('../utils')
 
-from pprint import pprint
-from datetime import datetime
 from MongoDB import Mongo
+from matplotlib import pyplot as plt
+from datetime import datetime
 
 mongo = Mongo()
 
@@ -74,10 +74,28 @@ pipeline = [
 ]
 
 result = mongo.db.cinemas.aggregate(pipeline)
+data = list(result)
 
 print("Voici la répartition des recettes liées au cinéma pour la ville de " + city + " sur la période " + start_date.strftime("%d-%m-%Y") + " - " + end_date.strftime("%d-%m-%Y") + " :\n")
-for doc in result:
+for doc in data:
     print("Cinéma : " + doc['cinema_name'] + " \t| Recette : " + str(doc['recipe_cinema']) + " \t| Pourcentage : " + str(round(doc['pourcentage'], 2)) + "%")
 
+
+# plot the results in histogram
+
+fig, ax = plt.subplots()
+
+y = [doc["pourcentage"] for doc in data]
+x = [doc["cinema_name"] for doc in data]
+
+ax.pie(y, labels=x, autopct='%1.1f%%', startangle=90)
+
+ax.set_title('Répartition des recettes liées au cinéma pour la ville de ' + city + ' sur la période ' + start_date.strftime("%d-%m-%Y") + ' - ' + end_date.strftime("%d-%m-%Y"))
+
+# open window full screen
+manager = plt.get_current_fig_manager()
+manager.resize(*manager.window.maxsize())
+
+plt.show()
 
 mongo.close()

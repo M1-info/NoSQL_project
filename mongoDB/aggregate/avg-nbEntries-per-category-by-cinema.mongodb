@@ -32,4 +32,11 @@ var query = [
     { $sort: { "avg_nbEntries" : -1 } }
 ]
 
-db.cinemas.aggregate(query)
+var result = db.cinemas.aggregate(query)
+
+print("Nombre moyen d'entrées par catégorie de film pour le cinéma " + cinema_filter.name + " :\n")
+result.forEach(doc => {
+    print("Catégorie : " + doc.category)
+    print("Nombre moyen d'entrées : " + doc.avg_nbEntries)
+    print("")
+});

@@ -2,7 +2,7 @@ import sys
 sys.path.append('../utils')
 
 from MongoDB import Mongo
-from pprint import pprint
+from matplotlib import pyplot as plt
 from datetime import datetime
 
 mongo = Mongo()
@@ -35,9 +35,29 @@ pipeline = [
 ]
 
 result = mongo.db.cinemas.aggregate(pipeline)
+data = list(result)
 
 print("Evolution de la recette du cinéma " + cinema + " entre " + start_date.strftime("%Y") + " et " + end_date.strftime("%Y")+ " : \n")
 for doc in result:
     print("     Année : " + str(doc['year']) + " | Recette : " + str(doc['recipe']) + "€")
+
+
+# plot the results in histogram
+fig, ax = plt.subplots()
+
+y = [doc["recipe"] for doc in data]
+x = [doc["year"] for doc in data]
+
+ax.plot(x, y, color='green')
+
+ax.set_xlabel('Année')
+ax.set_ylabel('Recette (€)')
+ax.set_title('Evolution de la recette du cinéma "' + cinema + '" entre ' + start_date.strftime("%Y") + ' et ' + end_date.strftime("%Y"))
+
+# open window full screen
+manager = plt.get_current_fig_manager()
+manager.resize(*manager.window.maxsize())
+
+plt.show()
 
 mongo.close()
