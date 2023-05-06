@@ -9,17 +9,19 @@ var film_filter = { "films.filmShow.dateShow" : {
     $lte: new Date("2020-12-31")
 } }
 
-var query = [
+var pipeline = [
     { $match : cinema_filter },
     { $unwind: "$films" },
     { $unwind: "$films.filmShow" },
     { $match :  film_filter},
+    // group by title to regroup all the shows of the same film
     { $group: { _id: "$films.title", recipe: { $sum: "$films.filmShow.recipe" } } },
+    // group to regroup all the recipe of the same cinema
     { $group : { _id: null, recipe: { $sum: "$recipe" } } },
     { $project: { _id: 0, recipe: 1 } }
 ]
 
-var result = db.cinemas.aggregate(query).next()
+var result = db.cinemas.aggregate(pipeline).next()
 
 if(result == null){
     print("Pas de recette pendant cette période pour ce cinéma dans la base de données.")

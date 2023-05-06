@@ -82,7 +82,6 @@ for doc in data:
 
 
 # plot the results in histogram
-
 fig, ax = plt.subplots()
 
 y = [doc["pourcentage"] for doc in data]

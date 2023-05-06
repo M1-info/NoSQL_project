@@ -1,17 +1,20 @@
 use("ct620574")
 
+// filters the films by category
 var filter = {categories: "horror"}
 
-var query = [
+var pipeline = [
     { $match: filter },
+    // unwinds the feedbacks array
     { $unwind: "$feedbacks" },
+    // groups by title and calculates the average rating
     { $group: { _id: "$title", average_rating: { $avg: "$feedbacks.rating" } } },
+    { $project: { _id: 0, title: "$_id", average_rating: 1 } },
     { $sort: { average_rating: -1 } },
-    { $limit: 1 },
-    { $project: { _id: 0, title: "$_id", average_rating: 1 } }
+    { $limit: 1 }
 ]
 
-var best_film = db.films.aggregate(query)
+var best_film = db.films.aggregate(pipeline)
 
 if(best_film == null){
     print("Il n'y a pas de films avec cette catégorie dans la base de données.")

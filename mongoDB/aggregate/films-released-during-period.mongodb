@@ -1,11 +1,14 @@
 use("ct620574")
 
-var filter = { releaseDate : { 
-    $gte: new Date("2010-01-01"),
-    $lte: new Date("2010-12-31")
-} }
+// filters the films by release date
+var filter = { 
+    releaseDate : { 
+        $gte: new Date("2010-01-01"),
+        $lte: new Date("2010-12-31")
+    } 
+}
 
-var query = [
+var pipeline = [
     { $match : filter },
     { $project: {
          _id: 0, 
@@ -15,7 +18,7 @@ var query = [
     }
 ]
 
-var films = db.films.aggregate(query)
+var films = db.films.aggregate(pipeline)
 
 if(films == null){
     print("Il n'y a pas de films sortis pendant cette période dans la base de données.")

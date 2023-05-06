@@ -5,7 +5,6 @@ from MongoDB import Mongo
 
 mongo = Mongo()
 
-
 pipeline = [
     {'$unwind': '$actors'},
     {'$group': {

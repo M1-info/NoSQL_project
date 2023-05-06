@@ -3,7 +3,32 @@ import faker
 import os
 import bson
 
-categories_name = ["Horreur", "Action", "Comédie", "Drame", "Thriller", "Science-fiction", "Fantastique", "Aventure", "Animation", "Policier", "Documentaire", "Historique", "Guerre", "Biopic", "Musical", "Western", "Romance", "Famille", "Sport", "Emission", "Jeunesse", "Spectacle", "Autre"]
+categories_name = [
+    "Horreur", 
+    "Action", 
+    "Comédie", 
+    "Drame", 
+    "Thriller", 
+    "Science-fiction", 
+    "Fantastique", 
+    "Aventure", 
+    "Animation", 
+    "Policier", 
+    "Documentaire", 
+    "Historique", 
+    "Guerre", 
+    "Biopic", 
+    "Musical", 
+    "Western", 
+    "Romance", 
+    "Famille", 
+    "Sport", 
+    "Emission", 
+    "Jeunesse", 
+    "Spectacle", 
+    "Autre"
+]
+
 categories = []
 
 fake = faker.Faker('fr_FR')

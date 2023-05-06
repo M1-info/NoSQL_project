@@ -6,7 +6,7 @@ var filter = {name : "Horreur"}
 var update = {$set : {name : "horror"}}
 
 try {
-    // update the category from the films before
+    // update the category from the films collection
     var updateCategories = {$set : {"categories.$" : update.$set.name}}
     db.films.updateMany({categories: filter.name}, updateCategories)
     db.categories.updateOne(filter, update)

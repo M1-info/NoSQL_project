@@ -4,7 +4,7 @@ use("ct620574")
 var filters = {name : "Spy"}
 
 try {
-    // delete the category from the films before
+    // delete the category from the films collection
     db.films.updateMany({}, {$pull: {categories: filters.name}})
     db.categories.deleteOne(filters)
 } catch (error) {

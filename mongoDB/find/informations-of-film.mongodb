@@ -2,7 +2,6 @@ use("ct620574")
 
 var filter = {title: "Harry Potter à l'école des sorciers"}
 
-
 var film_infos = db.films.findOne(filter)
 
 if(film_infos == null){

@@ -4,6 +4,7 @@ var filter = {title : "Harry Potter à l'école des sorciers"}
 var projection = {"_id" : 0, "feedbacks" : 1}
 
 var feedbacks_query = db.films.findOne(filter, projection)
+
 if(feedbacks_query == null){
     print("Le film \"" + filter.title + "\" n'existe pas dans la base de données.")
 } else {

@@ -1,19 +1,22 @@
 use("ct620574")
 
+// number of comments to display
 var number_of_comments = 2
 
+// filters the film by title
 var filter = {
     title : "Harry Potter à l'école des sorciers"
 }
 
-var query = [
+var pipeline = [
     { $match: filter },
+    // unwinds the feedbacks array
     { $unwind: "$feedbacks" },
     { $project: { _id: 0, comment: "$feedbacks.comment" } },
     { $limit: number_of_comments }    
 ]
 
-var film_comments = db.films.aggregate(query)
+var film_comments = db.films.aggregate(pipeline)
 
 if(film_comments == null){
     print("Le film \"" + filter.title + "\" n'existe pas dans la base de données.")

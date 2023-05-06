@@ -1,16 +1,17 @@
 use("ct620574")
 
+// number of films to display
 var number_of_films = 10
 
-var query = [
+var pipeline = [
     { $unwind: "$feedbacks" },
     { $group: { _id: "$title", average_rating : { $avg : "$feedbacks.rating" } } },
+    { $project: { _id: 0, title: "$_id", average_rating: 1 } },
     { $sort: { average_rating : 1} },
-    { $limit: number_of_films},
-    { $project: { _id: 0, title: "$_id", average_rating: 1 } }
+    { $limit: number_of_films}
 ]
 
-var worst_films = db.films.aggregate(query)
+var worst_films = db.films.aggregate(pipeline)
 
 if(worst_films == null){
     print("Il n'y a pas de films notés dans la base de données.")

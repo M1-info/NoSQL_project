@@ -44,8 +44,6 @@ for doc in data:
     print("")
 
 # plot the results in histogram
-# create a line for each category
-
 fig, ax = plt.subplots()
 
 categories = []

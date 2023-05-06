@@ -2,6 +2,7 @@ use("ct620574")
 
 var filter = {actors: {firstName: "Daniel", lastName : "Radcliffe"}};
 var projection = { _id: 0, title: 1 };
+
 var films = db.films.find(filter, projection)
 
 print("Liste des films dans lesquels joue l'acteur \"" + filter.actors.firstName + " " + filter.actors.lastName + "\" : ")

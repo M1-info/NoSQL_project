@@ -1,5 +1,6 @@
 use("ct620574")
 
+// filters the cinema by name
 var cinema_filter = { 
     name : "Charpentier et Fils",
 }
@@ -7,6 +8,7 @@ var cinema_filter = {
 var query = [
     { $match: cinema_filter },
     { $unwind: "$films" },
+    // joins the films collection to get the categories of each film
     { $lookup: {
             from: "films",
             let: { filmId: "$films.film" },
@@ -17,8 +19,10 @@ var query = [
             as: "film_categories"
         }
     },
+    // unwinds the categories array
     { $unwind: "$film_categories" },
     { $unwind: "$film_categories.categories" },
+    // groups by category and calculates the average number of entries
     { $group: { 
             "_id": "$film_categories.categories", 
             "avg_nbEntries" : {$avg : "$films.numberEntries"}

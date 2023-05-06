@@ -39,7 +39,6 @@ for doc in data:
     print()
 
 # plot the results in histogram
-
 fig, ax = plt.subplots()
 
 y = [doc["enterPerShow"] for doc in data]

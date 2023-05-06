@@ -25,4 +25,6 @@ result.forEach((city) => {
     print("")
 })
 
+
+// drop the temporary collection
 db.most_profitable_cinema_of_cities.drop()

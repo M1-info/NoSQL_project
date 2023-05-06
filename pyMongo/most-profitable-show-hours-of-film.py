@@ -43,7 +43,6 @@ for doc in result:
     print()
 
 # plot the results in histogram
-
 fig, ax = plt.subplots()
 
 y = [doc["recipe"] for doc in data]

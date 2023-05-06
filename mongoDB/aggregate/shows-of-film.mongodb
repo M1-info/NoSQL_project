@@ -1,12 +1,17 @@
 use("ct620574")
 
-var cinema = "Aubry Samson et Fils"
-var film = "Arbre durer"
+// filters the cinema by name and a specific film
+var filter = {
+    name: "Aubry Samson et Fils",
+    "films.title": "Arbre durer"
+}
 
+// projection of the pipeline
 var $project = {
     _id: 0,
     "dateShow": "$_id",
     showDay: {
+        // use map to format the dates of each show
         $map: {
             input: "$showDay",
             as: "show",
@@ -22,14 +27,15 @@ var $project = {
 var query = [
     { $unwind: "$films" },
     { $unwind: "$films.filmShow" },
-    { $match: { name: cinema, "films.title": film } },
+    { $match: filter },
+    // group by dateShow to regroup all the shows of the same day
     { $group: {_id: "$films.filmShow.dateShow", showDay: { $push: "$films.filmShow" } }},
     { $project }
 ]
 
 var shows_days = db.cinemas.aggregate(query)
 
-print(`Liste des séances du film "${film}" au cinéma "${cinema}" :`)
+print(`Liste des séances du film "${filter["films.title"]}" au cinéma "${filter.name}" :`)
 shows_days.forEach(diffusion => {
     print("► Séances du " + diffusion.dateShow + " : ")
     diffusion.showDay.forEach(show => {

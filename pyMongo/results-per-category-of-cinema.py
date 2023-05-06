@@ -92,11 +92,6 @@ for doc in result['categories']:
 
 
 # plot the results
-
-# change the plot style
-plt.style.use('ggplot')
-
-# create the figure
 labels = []
 sizes = []
 for doc in result['categories']:

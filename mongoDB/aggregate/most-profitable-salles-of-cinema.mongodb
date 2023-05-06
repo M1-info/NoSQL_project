@@ -1,11 +1,16 @@
 use("ct620574")
 
-var cinema_name = "Charpentier et Fils"
+// filters the cinema by name
+var filter = {
+    name: "Charpentier et Fils"
+}
 
 var pipeline = [
-    {$match: {name: cinema_name}},
+    {$match: filter},
+    // unwinds the films shows array
     {$unwind: "$films"},
     {$unwind: "$films.filmShow"},
+    // groups by salle and calculates the recipe, the number of entries and the number of films for each salle number
     {$group: {
         _id: "$films.filmShow.salle",
         recipe: {$sum: "$films.filmShow.recipe"},
@@ -17,7 +22,7 @@ var pipeline = [
 var result = db.cinemas.aggregate(pipeline).toArray()
 
 var current_salle = null
-print("Informations sur la rentabilité des salles du Cinéma " + cinema_name + ":")
+print("Informations sur la rentabilité des salles du Cinéma " + filter.name + ":")
 result.forEach(function (doc) {
     if (doc["_id"] !== current_salle) {
         current_salle = salle

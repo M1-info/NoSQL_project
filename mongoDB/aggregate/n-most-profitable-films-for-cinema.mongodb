@@ -1,20 +1,22 @@
 use("ct620574")
 
+// number of films to display
 var nb_films = 5
 
+// filters the cinema by name
 var filter = { 
     name : "Aubry Samson et Fils",
 }
 
-var query = [
+var pipeline = [
     { $match : filter },
     { $unwind: "$films" },
+    { $project: { "_id": 0, "films.title": 1, "films.recipe": 1 } },
     { $sort: { "films.recipe": -1 } },
-    { $limit: nb_films },
-    { $project: { "_id": 0, "films.title": 1, "films.recipe": 1 } }
+    { $limit: nb_films }
 ]
 
-var films = db.cinemas.aggregate(query)
+var films = db.cinemas.aggregate(pipeline)
 
 if(films == null){
     print("Pas de film diffusés dans ce cinéma dans la base de données.")

@@ -1,10 +1,15 @@
 use('ct620574')
 
-var cinema = "Charpentier et Fils"
+// filters the cinema by name
+var filter = {
+    name: "Charpentier et Fils"
+}
 
 var pipeline = [
-    {$match: {name: cinema}},
+    {$match: filter},
+    // unwinds the films array
     {$unwind: "$films"},
+    // group to calculate the number of films, the number of entries and the total recipe of that cinema
     {$group: {
         _id: null,
         number_of_films: {$sum: 1},
@@ -23,7 +28,7 @@ var pipeline = [
 
 var result = db.cinemas.aggregate(pipeline).next()
 
-print("Informations du cinéma " + cinema + " :")
+print("Informations du cinéma " + filter.name + " :")
 print("Nombre de films : " + result.number_of_films)
 print("Nombre d'entrées : " + result.number_of_entries)
 print("Recette totale : " + result.total_recipe)

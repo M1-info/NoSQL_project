@@ -1,5 +1,6 @@
 use("ct620574")
 
+// add days to a date
 function addDays(date, days) {
     var result = date
     result.setDate(result.getDate() + days);

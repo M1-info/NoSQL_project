@@ -1,10 +1,10 @@
 use("ct620574")
 
 var filter = {name : "Charpentier et Fils"}
-
 var projection = {films: {title: 1}, city: 1}
 
 var cinema = db.cinemas.findOne(filter, projection)
+
 if(cinema == null){
     print("Le cinéma \"" + filter.name + "\" n'existe pas dans la base de données.")
 } else {

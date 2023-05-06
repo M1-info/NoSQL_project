@@ -5,10 +5,12 @@ from MongoDB import Mongo
 
 mongo = Mongo()
 
-cinema = 'Charpentier et Fils'
+filter = {
+    'name': 'Charpentier et Fils'
+}
 
 pipeline = [
-    {'$match': {'name': cinema}},
+    {'$match': filter},
     {'$unwind': '$films'},
     # lookup the film collection
     {'$lookup': {
@@ -46,7 +48,7 @@ pipeline = [
 
 result = mongo.db.cinemas.aggregate(pipeline)
 
-print("Les catégories de films les plus rentables du cinéma \"" + cinema + "\" sont : \n")
+print("Les catégories de films les plus rentables du cinéma \"" + filter['name'] + "\" sont : \n")
 for doc in result:
     print("Categorie : " + doc['category'])
     print("     Nombre de films : " + str(doc['number_of_films']))

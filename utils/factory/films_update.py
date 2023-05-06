@@ -1,5 +1,4 @@
 import json
-import os
 
 films = json.load(open('../../data/films.json', 'r', encoding='utf8'))
 
