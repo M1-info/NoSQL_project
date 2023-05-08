@@ -11,19 +11,21 @@ var map = function() {
 }
 
 var reduce = function(key, values) { 
-    var avg = values.reduce((acc, value) => ({
-        recipe: acc.recipe + value.recipe, 
-        numberEntries: acc.numberEntries + value.numberEntries
-    }),{
-        repice: 0, numberEntries: 0
-    })
+    var avg = values.reduce((acc, film) => {
+        acc.recipe += film.recipe
+        acc.numberEntries += film.numberEntries
+        acc.nb_notations += 1
+        return acc
+    }, {recipe: 0, numberEntries: 0, nb_notations: 0})
     avg = {
-        recipe: avg.recipe / values.length, numberEntries: avg.numberEntries / values.length
+        recipe: avg.recipe / values.length, numberEntries: avg.numberEntries / values.length, nb_notations: avg.nb_notations
     }
     return {key, avg}
 } 
 
 var result = db.films.mapReduce(map, reduce, {out: {inline: 1}, })
+// sort result by rating
+result.results.sort((a, b) => a['_id'] - b['_id'])
 
 var current_rating = null
 print("")
@@ -32,14 +34,14 @@ result.results.forEach(doc => {
     if (doc['_id'] != current_rating) {
         current_rating = Math.round(doc['_id'])
         print("Note : ", current_rating)
-        print("     Nombre de films ayant cette note : " + doc['nb_notations'])
+        print("     Nombre de films ayant cette note : " + doc['value']['avg']['nb_notations'])
     }
     else if (doc['_id'] == null) {
         print("Note : Non noté")
-        print("     Nombre de films non notés : " + doc['nb_notations'])
+        print("     Nombre de films non notés : " + doc['value']['avg']['nb_notations'])
     }
 
-    print("     Recette moyenne : " + Math.round(doc['average_recipe']) + "€")
-    print("     Nombre d'entrées moyen : " + Math.round(doc['average_numberEntries']) + " personnes")
+    print("     Recette moyenne : " + Math.round(doc['value']['avg']['recipe']) + "€")
+    print("     Nombre d'entrées moyen : " + Math.round(doc['value']['avg']['numberEntries']) + " personnes")
     print("\n")
 });

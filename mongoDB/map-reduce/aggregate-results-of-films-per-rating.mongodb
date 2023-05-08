@@ -35,5 +35,5 @@ result.forEach(doc => {
     
     print("     Recette moyenne : " + Math.round(doc['average_recipe']) + "€")
     print("     Nombre d'entrées moyen : " + Math.round(doc['average_numberEntries']) + " personnes")
-    print("\n")
+    print("")
 });

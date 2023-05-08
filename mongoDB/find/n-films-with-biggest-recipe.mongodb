@@ -9,7 +9,7 @@ var films = db.films.find({}, projection).sort(sort).limit(nb_films)
 if(films == null){
     print("Pas de film avec recette dans la base de données.")
 } else {
-    print(`Voici les ${nb_films} films avec les plus grosses recetes : `)
+    print(`Voici les ${nb_films} films avec les plus grosses recettes : `)
     films.forEach(film => {
         print(`► ${film.title} avec ${film.recipe}€ comme recette ` )
     })

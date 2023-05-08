@@ -2,8 +2,8 @@ use("ct620574")
 
 // filters the cinema by name and a specific film
 var filter = {
-    name: "Aubry Samson et Fils",
-    "films.title": "Arbre durer"
+    name: "Charpentier et Fils",
+    "films.title": "Enfant rond"
 }
 
 // projection of the pipeline
@@ -37,9 +37,9 @@ var shows_days = db.cinemas.aggregate(query)
 
 print(`Liste des séances du film "${filter["films.title"]}" au cinéma "${filter.name}" :`)
 shows_days.forEach(diffusion => {
-    print("► Séances du " + diffusion.dateShow + " : ")
+    print("► Séances du " + diffusion.dateShow.toLocaleDateString("fr-FR") + " : ")
     diffusion.showDay.forEach(show => {
         print("    ► " + show.startShow + " - " + show.endShow + " au prix de " + show.price + "€")
     })
-    print("\n")
+    print("")
 })

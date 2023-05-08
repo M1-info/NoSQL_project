@@ -1,7 +1,7 @@
 use("ct620574")
 
 // filters the films by category
-var filter = {categories: "horror"}
+var filter = {categories: "Action"}
 
 var pipeline = [
     { $match: filter },
