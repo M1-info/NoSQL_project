@@ -24,24 +24,22 @@ var reduce = function(key, values) {
 } 
 
 var result = db.films.mapReduce(map, reduce, {out: {inline: 1}, })
-// sort result by rating
-result.results.sort((a, b) => a['_id'] - b['_id'])
+result.results.sort((a, b) => a['_id'] - b['_id']) //sort result by rating
 
-var current_rating = null
+var current_rating = -1
 print("")
 print("Résultats globaux par note : ")
 result.results.forEach(doc => {
-    if (doc['_id'] != current_rating) {
-        current_rating = Math.round(doc['_id'])
-        print("Note : ", current_rating)
-        print("     Nombre de films ayant cette note : " + doc['value']['avg']['nb_notations'])
-    }
-    else if (doc['_id'] == null) {
+    if (! ((doc['_id'] >= 0) && (doc['_id'] <= 5)) ) {
         print("Note : Non noté")
         print("     Nombre de films non notés : " + doc['value']['avg']['nb_notations'])
+    } else if (doc['_id'] != current_rating) {
+        current_rating = Math.round(doc['_id'])
+        print("Note : " + current_rating)
+        print("     Nombre de films ayant cette note : " + doc['value']['avg']['nb_notations'])
     }
 
     print("     Recette moyenne : " + Math.round(doc['value']['avg']['recipe']) + "€")
     print("     Nombre d'entrées moyen : " + Math.round(doc['value']['avg']['numberEntries']) + " personnes")
-    print("\n")
+    print("")
 });
