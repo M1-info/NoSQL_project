@@ -74,13 +74,14 @@ pipeline = [
     }}
 ]
 
-result = mongo.db.cinemas.aggregate(pipeline).next()
+result = mongo.db.cinemas.aggregate(pipeline)
+data = list(result)[0]
 
-print("Les catégories de films les plus rentables du cinéma \"" + cinema + "\" sont : \n")
-print("Nombre total de films : " + str(result['total_nbFilms']))
-print("Nombre total d'entrées : " + str(result['total_numberEntries']))
-print("Recette totale : " + str(result['total_recipe']))
-for doc in result['categories']:
+print("Voici les catégories de films les plus rentables du cinéma \"" + cinema + "\" sachant que :")
+print("Nombre total de films : " + str(data['total_nbFilms']))
+print("Nombre total d'entrées : " + str(data['total_numberEntries']))
+print("Recette totale : " + str(data['total_recipe']) + "\n")
+for doc in data['categories']:
     print('Catégorie : ' + doc['category'])
     print('     Nombre de films : ' + str(doc['nbFilms']))
     print('     Nombre d\'entrées : ' + str(doc['numberEntries']))
@@ -88,13 +89,13 @@ for doc in result['categories']:
     print('     Pourcentage de films : ' + str(doc['percent_nbFilms']))
     print('     Pourcentage d\'entrées : ' + str(doc['percent_numberEntries']))
     print('     Pourcentage de recette : ' + str(doc['percent_recipe']))
-    print('\n')
+    print('')
 
 
 # plot the results
 labels = []
 sizes = []
-for doc in result['categories']:
+for doc in data['categories']:
     labels.append(doc['category'])
     sizes.append(doc['percent_recipe'])
 

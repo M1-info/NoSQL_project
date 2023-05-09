@@ -34,7 +34,7 @@ result = mongo.db.cinemas.aggregate(pipeline)
 data = list(result)
 
 print("Statistique des heures de projection les plus rentables pour le film \""+ film_title + "\" :")
-for doc in result:
+for doc in data:
     print("Heure : {}h".format(doc['_id']))
     print("     Recette : {}€".format(doc['recipe']))
     print("     Nombre d'entrées : {}".format(doc['numberEntries']))

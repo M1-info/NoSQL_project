@@ -37,8 +37,9 @@ pipeline = [
 result = mongo.db.cinemas.aggregate(pipeline)
 data = list(result)
 
-print("Evolution de la recette du cinéma " + cinema + " entre " + start_date.strftime("%Y") + " et " + end_date.strftime("%Y")+ " : \n")
-for doc in result:
+
+print("Evolution de la recette du cinéma " + cinema + " entre " + start_date.strftime("%Y") + " et " + end_date.strftime("%Y")+ " : ")
+for doc in data:
     print("     Année : " + str(doc['year']) + " | Recette : " + str(doc['recipe']) + "€")
 
 
